@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import 'antd/dist/antd.less'
 import 'semantic-ui-less/semantic.less'
 import App from './app/App'
 import * as serviceWorker from './serviceWorker'
