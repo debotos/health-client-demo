@@ -1,0 +1,16 @@
+$default-page-bg-color: #edf2f7;
+
+body {
+	background-color: $default-page-bg-color;
+}
+
+.hide-native-scrollbar {
+	scrollbar-width: none; /* Firefox 64 */
+	-ms-overflow-style: none; /* Internet Explorer 11 */
+	&::-webkit-scrollbar {
+		/** WebKit */
+		display: none;
+		width: 0;
+		height: 0;
+	}
+}
