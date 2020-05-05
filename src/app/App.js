@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { StickyContainer, Sticky } from 'react-sticky'
 import { Progress } from 'semantic-ui-react'
 import { Tabs } from 'antd'
+import { Container } from 'styled-bootstrap-grid'
 import { FaRegUser, FaLandmark, FaUserTie, FaRegFileAlt, FaRegHandshake } from 'react-icons/fa'
 
 import './App.scss'
@@ -52,7 +53,7 @@ class App extends Component {
 	renderTabBar = (props, DefaultTabBar) => (
 		<Sticky bottomOffset={80}>
 			{({ style, isSticky }) => (
-				<div style={{ ...style, backgroundColor: isSticky ? '#fff' : 'transparent' }}>
+				<div style={{ ...style, zIndex: 9, backgroundColor: isSticky ? '#fff' : 'transparent' }}>
 					<DefaultTabBar {...props} style={{ textAlign: 'center', backgroundColor: '#fff' }} />
 					{this.getProgress()}
 				</div>
@@ -62,13 +63,9 @@ class App extends Component {
 
 	getProgress = () => {
 		return (
-			<Progress
-				style={{ marginLeft: '20px', marginRight: '20px' }}
-				progress='percent'
-				percent={50}
-				success
-				size='small'
-			/>
+			<Container>
+				<Progress progress='percent' percent={50} success size='small' />
+			</Container>
 		)
 	}
 
@@ -108,7 +105,7 @@ class App extends Component {
 
 							return (
 								<TabPane tab={TabHead} key={id}>
-									<div style={{ padding: '0 20px 20px 25px' }}>
+									<div style={{ padding: '0 10px 25px 10px' }}>
 										<ApplicationForm id={id} />
 									</div>
 								</TabPane>

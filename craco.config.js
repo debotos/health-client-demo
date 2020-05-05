@@ -8,7 +8,6 @@ module.exports = {
 					/* Ref: https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less */ modifyVars: {
 						'@primary-color': '#6459f5',
 						'@font-family': "'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif",
-						'@btn-font-weight': 'bold',
 					},
 					javascriptEnabled: true,
 				},
