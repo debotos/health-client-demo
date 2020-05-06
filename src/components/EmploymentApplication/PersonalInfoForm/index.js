@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Label, Segment } from 'semantic-ui-react'
-import { Form, Select, Input, Divider, Button, Modal } from 'antd'
+import { Form, Select, Input, Divider, Button, Modal, Transfer } from 'antd'
 import { Container, Row, Col } from 'styled-bootstrap-grid'
 import { PlusOutlined } from '@ant-design/icons'
 
@@ -46,6 +46,13 @@ export const relationshipTypes = [
 	{ key: 3, person: 'Brother', value: 'Brother' },
 	{ key: 4, person: 'Sister', value: 'Sister' },
 ]
+export const classificationPositionsData = [
+	{ key: 1, title: `RN`, chosen: false },
+	{ key: 2, title: `LPN`, chosen: false },
+	{ key: 3, title: `PT`, chosen: false },
+	{ key: 4, title: `OT`, chosen: false },
+	{ key: 5, title: `CNA`, chosen: false },
+]
 
 export class PersonalInfoForm extends Component {
 	onFinish = (values) => {
@@ -58,17 +65,24 @@ export class PersonalInfoForm extends Component {
 
 	constructor(props) {
 		super(props)
+		this.formRef = React.createRef()
 		this.state = {
 			contactAddModal: false,
 			contactEditModal: false,
 			contacts: [],
 			contactEditingData: null,
+			targetKeys: [],
 		}
 	}
 	render() {
 		return (
 			<Container>
-				<Form onFinish={this.onFinish} onFinishFailed={this.onFinishFailed}>
+				<Form
+					onFinish={this.onFinish}
+					onFinishFailed={this.onFinishFailed}
+					ref={this.formRef}
+					labelAlign='left'
+				>
 					{/* 1. Position Applying for */}
 					<Segment raised>
 						<Label as='a' color='teal' ribbon>
@@ -79,7 +93,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='4'>
 								<Form.Item
 									label='Type'
-									labelAlign='left'
 									name='type'
 									rules={[{ required: true, message: 'Please select type!' }]}
 								>
@@ -98,7 +111,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='4'>
 								<Form.Item
 									label='Country'
-									labelAlign='left'
 									name='country'
 									rules={[{ required: true, message: 'Please select country!' }]}
 								>
@@ -117,7 +129,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='4'>
 								<Form.Item
 									label='Position'
-									labelAlign='left'
 									name='position'
 									rules={[{ required: true, message: 'Please select position!' }]}
 								>
@@ -146,7 +157,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='3'>
 								<Form.Item
 									label='First'
-									labelAlign='left'
 									name='first'
 									rules={[{ required: true, message: 'Provide first name!' }]}
 								>
@@ -156,7 +166,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='3'>
 								<Form.Item
 									label='Middle'
-									labelAlign='left'
 									name='middle'
 									rules={[{ required: true, message: 'Provide middle name!' }]}
 								>
@@ -166,7 +175,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='3'>
 								<Form.Item
 									label='Last'
-									labelAlign='left'
 									name='last'
 									rules={[{ required: true, message: 'Provide last name!' }]}
 								>
@@ -176,7 +184,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='3'>
 								<Form.Item
 									label='Maiden'
-									labelAlign='left'
 									name='maiden'
 									rules={[{ required: true, message: 'Provide maiden name!' }]}
 								>
@@ -191,7 +198,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='4'>
 								<Form.Item
 									label='Street'
-									labelAlign='left'
 									name='street'
 									rules={[{ required: true, message: 'Provide street address!' }]}
 								>
@@ -201,7 +207,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='2'>
 								<Form.Item
 									label='City'
-									labelAlign='left'
 									name='city'
 									rules={[{ required: true, message: 'Provide city name!' }]}
 								>
@@ -211,7 +216,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='2'>
 								<Form.Item
 									label='State'
-									labelAlign='left'
 									name='state'
 									rules={[{ required: true, message: 'Select your state!' }]}
 								>
@@ -230,7 +234,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='2'>
 								<Form.Item
 									label='Zip code'
-									labelAlign='left'
 									name='zip'
 									rules={[{ required: true, message: 'Provide zip code!' }]}
 								>
@@ -240,7 +243,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='2'>
 								<Form.Item
 									label='Country'
-									labelAlign='left'
 									name='country'
 									rules={[{ required: true, message: 'Provide country!' }]}
 								>
@@ -255,7 +257,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='3'>
 								<Form.Item
 									label='Phone Type'
-									labelAlign='left'
 									name='phoneType'
 									rules={[{ required: true, message: 'Select phone type!' }]}
 								>
@@ -274,7 +275,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='3'>
 								<Form.Item
 									label='Phone Number'
-									labelAlign='left'
 									name='phoneNumber'
 									rules={[{ required: true, message: 'Provide phone number!' }]}
 								>
@@ -284,7 +284,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='3'>
 								<Form.Item
 									label='Email Address'
-									labelAlign='left'
 									name='email'
 									rules={[
 										{ required: true, message: 'Provide email address!' },
@@ -297,7 +296,6 @@ export class PersonalInfoForm extends Component {
 							<Col md='3'>
 								<Form.Item
 									label='Social Security No'
-									labelAlign='left'
 									name='socialSecurityNo'
 									rules={[{ required: true, message: 'Provide social security no!' }]}
 								>
@@ -316,7 +314,7 @@ export class PersonalInfoForm extends Component {
 								icon={<PlusOutlined />}
 								type='primary'
 								htmlType='button'
-								style={{ marginBottom: 16 }}
+								style={{ marginBottom: 5 }}
 								onClick={() => this.setState({ contactAddModal: true })}
 							>
 								Add
@@ -369,34 +367,41 @@ export class PersonalInfoForm extends Component {
 								data={this.state.contactEditingData}
 							/>
 						</Modal>
-						<br />
-						Magna enim incididunt do adipisicing irure exercitation quis officia reprehenderit
-						veniam ea. Irure ea non adipisicing nulla amet nostrud duis aute. Qui velit ullamco
-						aliqua ad amet aute ut est. Adipisicing enim exercitation Lorem dolor. Proident
-						adipisicing magna aliqua nulla dolor esse nostrud. Aliquip dolore reprehenderit amet non
-						est commodo qui ipsum. Velit cupidatat veniam ullamco veniam nulla. Exercitation et
-						nostrud do exercitation voluptate consequat. Proident sint laboris elit nulla nisi est
-						adipisicing deserunt elit cillum officia enim esse sint. Velit pariatur cillum eiusmod
-						voluptate excepteur. Duis fugiat ullamco ut quis sit excepteur cillum nostrud sit
-						cupidatat cupidatat reprehenderit quis. Commodo do pariatur velit aliquip proident minim
-						nisi. Labore fugiat pariatur ad ut esse velit elit aute ea est exercitation amet
-						laborum. Duis est ad esse pariatur eiusmod adipisicing ad laborum dolor id. Qui
-						adipisicing ea ut ex. Ut esse ex officia ipsum qui esse tempor consequat ad elit.
-						Ullamco amet nostrud ea aliquip eu velit ad nisi culpa adipisicing sunt. Duis
-						exercitation laboris in do tempor. Aliqua quis aliqua ipsum sunt enim veniam amet
-						excepteur dolor ex. Aliquip consectetur labore eu eu eu voluptate nisi Lorem qui esse
-						sit eiusmod. Sint reprehenderit amet nostrud nisi. Anim eiusmod fugiat incididunt veniam
-						ea veniam deserunt elit mollit dolor eu duis voluptate. Veniam labore dolore esse in
-						dolor tempor anim ut quis irure nisi ad labore ipsum. Fugiat proident incididunt ad aute
-						esse anim sunt do eu. Laboris cupidatat aliquip aliquip excepteur. Culpa amet anim ad
-						eiusmod do aliqua eiusmod. Exercitation fugiat tempor officia labore aliquip ea
-						excepteur. Esse consectetur laboris ipsum in laborum dolore do minim sint aute. Anim
-						nulla est qui ullamco voluptate nostrud quis. Pariatur anim nostrud ullamco voluptate
-						enim sit in duis duis mollit adipisicing. Consectetur aliqua adipisicing incididunt amet
-						pariatur. Enim exercitation reprehenderit dolor incididunt proident culpa Lorem.
-						Reprehenderit et ipsum reprehenderit quis cupidatat occaecat cupidatat anim.
+					</Segment>
+					{/* Classification */}
+					<Segment raised>
+						<Label as='a' color='teal' ribbon>
+							Classification
+						</Label>
+						{/* Positions (Transfer Input) */}
+						<Row style={{ marginTop: '10px' }}>
+							<Col
+								md='12'
+								style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+							>
+								<Form.Item
+									label='Select Positions'
+									name='positions'
+									rules={[{ required: true, message: 'Please select positions!' }]}
+								>
+									<Transfer
+										dataSource={classificationPositionsData}
+										titles={['Positions', 'Selected']}
+										targetKeys={this.state.targetKeys}
+										onChange={(targetKeys) => this.setState({ targetKeys })}
+										showSearch
+										filterOption={(inputValue, option) =>
+											option.title.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
+										}
+										render={(item) => item.title}
+										listStyle={{ minWidth: 240, minHeight: 270 }}
+									/>
+								</Form.Item>
+							</Col>
+						</Row>
 					</Segment>
 				</Form>
+				<button onClick={() => this.formRef.current.submit()}>Submit</button>
 			</Container>
 		)
 	}

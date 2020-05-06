@@ -30,10 +30,10 @@ export class EmergencyContactEdit extends Component {
 				layout='vertical'
 				ref={this.formRef}
 				initialValues={data}
+				labelAlign='left'
 			>
 				<Form.Item
 					label='Relationship Type'
-					labelAlign='left'
 					name='relationshipType'
 					rules={[{ required: true, message: 'Select relationship type!' }]}
 				>
@@ -51,7 +51,6 @@ export class EmergencyContactEdit extends Component {
 
 				<Form.Item
 					label='First'
-					labelAlign='left'
 					name='first'
 					rules={[{ required: true, message: 'Provide first name!' }]}
 				>
@@ -60,7 +59,6 @@ export class EmergencyContactEdit extends Component {
 
 				<Form.Item
 					label='Last'
-					labelAlign='left'
 					name='last'
 					rules={[{ required: true, message: 'Provide last name!' }]}
 				>
@@ -69,7 +67,6 @@ export class EmergencyContactEdit extends Component {
 
 				<Form.Item
 					label='Phone Type'
-					labelAlign='left'
 					name='phoneType'
 					rules={[{ required: true, message: 'Select phone type!' }]}
 				>
@@ -87,7 +84,6 @@ export class EmergencyContactEdit extends Component {
 
 				<Form.Item
 					label='Phone Number'
-					labelAlign='left'
 					name='phoneNumber'
 					rules={[{ required: true, message: 'Provide phone number!' }]}
 				>
