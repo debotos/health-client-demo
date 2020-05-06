@@ -422,9 +422,7 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Select Positions'
 									name='positions'
-									rules={[
-										{ whitespace: true, required: true, message: 'Please select positions!' },
-									]}
+									rules={[{ required: true, message: 'Please select positions!' }]}
 								>
 									<Transfer
 										dataSource={classificationPositionsData}
