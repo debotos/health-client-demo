@@ -1,6 +1,18 @@
 import React, { Component } from 'react'
 import { Label, Segment } from 'semantic-ui-react'
-import { Form, Select, Input, Divider, Button, Modal, Transfer } from 'antd'
+import {
+	Form,
+	Select,
+	InputNumber,
+	Input,
+	Divider,
+	Button,
+	Modal,
+	Transfer,
+	DatePicker,
+	Checkbox,
+	Radio,
+} from 'antd'
 import { Container, Row, Col } from 'styled-bootstrap-grid'
 import { PlusOutlined } from '@ant-design/icons'
 
@@ -9,7 +21,9 @@ import EmergencyContactTable from './EmergencyContactTable'
 import EmergencyContactAdd from './EmergencyContactAdd'
 import EmergencyContactEdit from './EmergencyContactEdit'
 
+const CheckboxGroup = Checkbox.Group
 const { Option } = Select
+const { TextArea } = Input
 const types = [
 	{ key: 1, title: 'RN', value: 'RN' },
 	{ key: 2, title: 'LPN', value: 'LPN' },
@@ -54,6 +68,14 @@ export const classificationPositionsData = [
 	{ key: 4, title: `OT`, chosen: false },
 	{ key: 5, title: `CNA`, chosen: false },
 ]
+export const salaryTypes = [
+	{ key: 1, name: 'Per Visit', value: 'Per Visit' },
+	{ key: 2, name: 'Hourly', value: 'Hourly' },
+	{ key: 3, name: 'Monthly', value: 'Monthly' },
+	{ key: 4, name: 'Yearly', value: 'Yearly' },
+]
+
+const FIELD_LICENSE_EVER_SUSPENDED = 'everLicenseSuspended'
 
 export class PersonalInfoForm extends Component {
 	onFinish = (values) => {
@@ -83,6 +105,7 @@ export class PersonalInfoForm extends Component {
 					onFinishFailed={this.onFinishFailed}
 					ref={this.formRef}
 					labelAlign='left'
+					initialValues={{ [FIELD_LICENSE_EVER_SUSPENDED]: false }}
 				>
 					{/* 1. Position Applying for */}
 					<Segment raised>
@@ -439,9 +462,131 @@ export class PersonalInfoForm extends Component {
 								</Form.Item>
 							</Col>
 						</Row>
+						<Row style={{ marginTop: '10px' }}>
+							<Col md='4'>
+								<Form.Item
+									label='License/Certification'
+									name='license'
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide license/certification!' },
+										{ min: 2, message: 'Too short!' },
+										{ max: 30, message: 'Too long!' },
+									]}
+								>
+									<Input allowClear={true} placeholder='License/Certification' />
+								</Form.Item>
+							</Col>
+							<Col md='4'>
+								<Form.Item
+									label='State Issued'
+									name='stateIssued'
+									rules={[{ whitespace: true, required: true, message: 'Select issued state!' }]}
+								>
+									<Select showSearch allowClear={true} placeholder='Select issued state'>
+										{states.map((type) => {
+											const { key, name, value } = type
+											return (
+												<Option key={key} value={value}>
+													{name}
+												</Option>
+											)
+										})}
+									</Select>
+								</Form.Item>
+							</Col>
+							<Col md='4'>
+								<Form.Item
+									label='Expiration Date'
+									name='expirationDate'
+									rules={[{ required: true, message: 'Select expiration date!' }]}
+								>
+									<DatePicker
+										allowClear={true}
+										placeholder='Select expiration date'
+										style={{ width: '100%' }}
+									/>
+								</Form.Item>
+							</Col>
+						</Row>
+						<Row style={{ marginTop: '10px' }}>
+							<Col md='12' style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+								<span style={{ marginRight: 10, marginBottom: 5 }}>
+									Has your license ever been suspended or revoked?
+								</span>
+								<Form.Item name={FIELD_LICENSE_EVER_SUSPENDED}>
+									<Radio.Group>
+										<Radio value={true}>Yes</Radio>
+										<Radio value={false}>No</Radio>
+									</Radio.Group>
+								</Form.Item>
+							</Col>
+						</Row>
+						<Row style={{ marginTop: '10px' }}>
+							<Col md='12' style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+								<span style={{ marginRight: 10, marginBottom: 5 }}>If yes, please explain</span>
+								<Form.Item name='explainLicenseSuspend' style={{ width: '100%' }}>
+									<TextArea rows={2} placeholder='Explain..' />
+								</Form.Item>
+							</Col>
+						</Row>
+						<Row style={{ marginTop: '10px' }}>
+							<Col md='4'>
+								<Form.Item
+									label='Salary Requirements'
+									name='salary'
+									rules={[{ required: true, message: 'Provide salary requirement!' }]}
+								>
+									<InputNumber
+										style={{ width: '100%' }}
+										min={1}
+										step={100}
+										placeholder='Salary requirement'
+										formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+										parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+									/>
+								</Form.Item>
+							</Col>
+							<Col md='4'>
+								<Form.Item
+									label='Select Type'
+									name='salaryType'
+									rules={[{ whitespace: true, required: true, message: 'Select salary type!' }]}
+								>
+									<Select allowClear={true} placeholder='Select salary type'>
+										{salaryTypes.map((type) => {
+											const { key, name, value } = type
+											return (
+												<Option key={key} value={value}>
+													{name}
+												</Option>
+											)
+										})}
+									</Select>
+								</Form.Item>
+							</Col>
+							<Col md='4'>
+								<Form.Item
+									label='Are you available to work'
+									name='availableToWork'
+									rules={[{ required: true, message: 'Select availability!' }]}
+								>
+									<CheckboxGroup
+										options={['Full Time', 'Part Time', 'Per Diem']}
+										value={this.state.checkedList}
+										onChange={this.onChange}
+									/>
+								</Form.Item>
+							</Col>
+						</Row>
+					</Segment>
+					{/* Specify days / hours you may be available */}
+					<Segment raised>
+						<Label as='a' color='teal' ribbon>
+							Specify days / hours you may be available
+						</Label>
 					</Segment>
 				</Form>
-				<button onClick={() => this.formRef.current.submit()}>Submit</button>
+				{/* <button onClick={() => this.formRef.current.submit()}>Submit</button> */}
 			</Container>
 		)
 	}

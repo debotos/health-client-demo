@@ -38,7 +38,7 @@ export class EmergencyContactAdd extends Component {
 					name='relationshipType'
 					rules={[{ whitespace: true, required: true, message: 'Select relationship type!' }]}
 				>
-					<Select allowClear={true} placeholder='Select Relationship type'>
+					<Select allowClear={true} placeholder='Select relationship type'>
 						{relationshipTypes.map((type) => {
 							const { key, person, value } = type
 							return (
