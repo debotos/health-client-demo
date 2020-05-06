@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, Select, Input, Button } from 'antd'
 import { SaveOutlined } from '@ant-design/icons'
 
+import { phoneValidationRegex } from '../../../utils/helpers'
 import { phoneTypes, relationshipTypes } from './index'
 
 const { Option } = Select
@@ -35,7 +36,7 @@ export class EmergencyContactEdit extends Component {
 				<Form.Item
 					label='Relationship Type'
 					name='relationshipType'
-					rules={[{ required: true, message: 'Select relationship type!' }]}
+					rules={[{ whitespace: true, required: true, message: 'Select relationship type!' }]}
 				>
 					<Select allowClear={true} placeholder='Select Relationship type'>
 						{relationshipTypes.map((type) => {
@@ -52,7 +53,11 @@ export class EmergencyContactEdit extends Component {
 				<Form.Item
 					label='First'
 					name='first'
-					rules={[{ required: true, message: 'Provide first name!' }]}
+					rules={[
+						{ whitespace: true, required: true, message: 'Provide first name!' },
+						{ min: 2, message: 'Too short!' },
+						{ max: 30, message: 'Too long!' },
+					]}
 				>
 					<Input allowClear={true} placeholder='First name' />
 				</Form.Item>
@@ -60,7 +65,11 @@ export class EmergencyContactEdit extends Component {
 				<Form.Item
 					label='Last'
 					name='last'
-					rules={[{ required: true, message: 'Provide last name!' }]}
+					rules={[
+						{ whitespace: true, required: true, message: 'Provide last name!' },
+						{ min: 2, message: 'Too short!' },
+						{ max: 30, message: 'Too long!' },
+					]}
 				>
 					<Input allowClear={true} placeholder='Last name' />
 				</Form.Item>
@@ -68,7 +77,7 @@ export class EmergencyContactEdit extends Component {
 				<Form.Item
 					label='Phone Type'
 					name='phoneType'
-					rules={[{ required: true, message: 'Select phone type!' }]}
+					rules={[{ whitespace: true, required: true, message: 'Select phone type!' }]}
 				>
 					<Select allowClear={true} placeholder='Select phone type'>
 						{phoneTypes.map((type) => {
@@ -85,7 +94,10 @@ export class EmergencyContactEdit extends Component {
 				<Form.Item
 					label='Phone Number'
 					name='phoneNumber'
-					rules={[{ required: true, message: 'Provide phone number!' }]}
+					rules={[
+						{ whitespace: true, required: true, message: 'Provide phone number!' },
+						{ pattern: phoneValidationRegex, message: 'Phone number is invalid!' },
+					]}
 				>
 					<Input allowClear={true} placeholder='Phone number' />
 				</Form.Item>

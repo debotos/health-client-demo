@@ -23,3 +23,9 @@ export function randomString(len, an) {
 export function hasErrors(fieldsError) {
 	return Object.keys(fieldsError).some((field) => fieldsError[field])
 }
+
+export const phoneValidationRegex = new RegExp(/^[\s()+-]*([0-9][\s()+-]*){6,20}$/)
+
+export const validatePhone = (mobile = '') => {
+	return phoneValidationRegex.test(mobile)
+}

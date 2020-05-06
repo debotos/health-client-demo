@@ -4,6 +4,7 @@ import { Form, Select, Input, Divider, Button, Modal, Transfer } from 'antd'
 import { Container, Row, Col } from 'styled-bootstrap-grid'
 import { PlusOutlined } from '@ant-design/icons'
 
+import { phoneValidationRegex } from '../../../utils/helpers'
 import EmergencyContactTable from './EmergencyContactTable'
 import EmergencyContactAdd from './EmergencyContactAdd'
 import EmergencyContactEdit from './EmergencyContactEdit'
@@ -94,7 +95,7 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Type'
 									name='type'
-									rules={[{ required: true, message: 'Please select type!' }]}
+									rules={[{ whitespace: true, required: true, message: 'Please select type!' }]}
 								>
 									<Select allowClear={true} placeholder='Select Type'>
 										{types.map((type) => {
@@ -112,7 +113,7 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Country'
 									name='country'
-									rules={[{ required: true, message: 'Please select country!' }]}
+									rules={[{ whitespace: true, required: true, message: 'Please select country!' }]}
 								>
 									<Select allowClear={true} placeholder='Select Country'>
 										{countries.map((country) => {
@@ -130,7 +131,7 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Position'
 									name='position'
-									rules={[{ required: true, message: 'Please select position!' }]}
+									rules={[{ whitespace: true, required: true, message: 'Please select position!' }]}
 								>
 									<Select allowClear={true} placeholder='Available Positions'>
 										{positions.map((position) => {
@@ -158,7 +159,11 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='First'
 									name='first'
-									rules={[{ required: true, message: 'Provide first name!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide first name!' },
+										{ min: 2, message: 'Too short!' },
+										{ max: 30, message: 'Too long!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='First name' />
 								</Form.Item>
@@ -167,7 +172,11 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Middle'
 									name='middle'
-									rules={[{ required: true, message: 'Provide middle name!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide middle name!' },
+										{ min: 2, message: 'Too short!' },
+										{ max: 30, message: 'Too long!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='Middle name' />
 								</Form.Item>
@@ -176,7 +185,11 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Last'
 									name='last'
-									rules={[{ required: true, message: 'Provide last name!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide last name!' },
+										{ min: 2, message: 'Too short!' },
+										{ max: 30, message: 'Too long!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='Last name' />
 								</Form.Item>
@@ -185,7 +198,11 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Maiden'
 									name='maiden'
-									rules={[{ required: true, message: 'Provide maiden name!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide maiden name!' },
+										{ min: 2, message: 'Too short!' },
+										{ max: 30, message: 'Too long!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='Maiden name' />
 								</Form.Item>
@@ -199,7 +216,11 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Street'
 									name='street'
-									rules={[{ required: true, message: 'Provide street address!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide street address!' },
+										{ min: 5, message: 'Too short!' },
+										{ max: 150, message: 'Too long!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='Street address' />
 								</Form.Item>
@@ -208,7 +229,11 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='City'
 									name='city'
-									rules={[{ required: true, message: 'Provide city name!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide city name!' },
+										{ min: 2, message: 'Too short!' },
+										{ max: 50, message: 'Too long!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='City name' />
 								</Form.Item>
@@ -217,7 +242,7 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='State'
 									name='state'
-									rules={[{ required: true, message: 'Select your state!' }]}
+									rules={[{ whitespace: true, required: true, message: 'Select your state!' }]}
 								>
 									<Select showSearch allowClear={true} placeholder='Select state'>
 										{states.map((type) => {
@@ -235,7 +260,11 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Zip code'
 									name='zip'
-									rules={[{ required: true, message: 'Provide zip code!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide zip code!' },
+										{ min: 2, message: 'Too short!' },
+										{ max: 30, message: 'Too long!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='Zip code' />
 								</Form.Item>
@@ -244,7 +273,11 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Country'
 									name='country'
-									rules={[{ required: true, message: 'Provide country!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide country!' },
+										{ min: 2, message: 'Too short!' },
+										{ max: 50, message: 'Too long!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='Country name' />
 								</Form.Item>
@@ -258,7 +291,7 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Phone Type'
 									name='phoneType'
-									rules={[{ required: true, message: 'Select phone type!' }]}
+									rules={[{ whitespace: true, required: true, message: 'Select phone type!' }]}
 								>
 									<Select allowClear={true} placeholder='Select phone type'>
 										{phoneTypes.map((type) => {
@@ -276,7 +309,10 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Phone Number'
 									name='phoneNumber'
-									rules={[{ required: true, message: 'Provide phone number!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide phone number!' },
+										{ pattern: phoneValidationRegex, message: 'Phone number is invalid!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='Phone number' />
 								</Form.Item>
@@ -286,7 +322,7 @@ export class PersonalInfoForm extends Component {
 									label='Email Address'
 									name='email'
 									rules={[
-										{ required: true, message: 'Provide email address!' },
+										{ whitespace: true, required: true, message: 'Provide email address!' },
 										{ type: 'email', message: 'Invalid email address!' },
 									]}
 								>
@@ -297,7 +333,11 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Social Security No'
 									name='socialSecurityNo'
-									rules={[{ required: true, message: 'Provide social security no!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide social security no!' },
+										{ min: 2, message: 'Too short!' },
+										{ max: 100, message: 'Too long!' },
+									]}
 								>
 									<Input allowClear={true} placeholder='Social security no' />
 								</Form.Item>
@@ -382,7 +422,9 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Select Positions'
 									name='positions'
-									rules={[{ required: true, message: 'Please select positions!' }]}
+									rules={[
+										{ whitespace: true, required: true, message: 'Please select positions!' },
+									]}
 								>
 									<Transfer
 										dataSource={classificationPositionsData}
