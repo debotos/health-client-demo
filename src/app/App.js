@@ -105,7 +105,7 @@ class App extends Component {
 
 							return (
 								<TabPane tab={TabHead} key={id}>
-									<div style={{ padding: '0 10px 25px 10px' }}>
+									<div style={{ paddingBottom: '25px' }}>
 										<ApplicationForm id={id} />
 									</div>
 								</TabPane>

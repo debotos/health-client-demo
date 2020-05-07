@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { Form, Select, Input, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 
-import { phoneValidationRegex } from '../../../utils/helpers'
-import { phoneTypes, relationshipTypes } from './index'
-import { randomString } from '../../../utils/helpers'
+import { phoneValidationRegex } from '../../../../utils/helpers'
+import { phoneTypes, relationshipTypes } from '../index'
+import { randomString } from '../../../../utils/helpers'
 
 const { Option } = Select
 

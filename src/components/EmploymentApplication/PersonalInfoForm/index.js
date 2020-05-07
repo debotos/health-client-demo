@@ -17,9 +17,11 @@ import { Container, Row, Col } from 'styled-bootstrap-grid'
 import { PlusOutlined } from '@ant-design/icons'
 
 import { phoneValidationRegex } from '../../../utils/helpers'
-import EmergencyContactTable from './EmergencyContactTable'
-import EmergencyContactAdd from './EmergencyContactAdd'
-import EmergencyContactEdit from './EmergencyContactEdit'
+import EmergencyContactTable from './EmergencyContact/EmergencyContactTable'
+import EmergencyContactAdd from './EmergencyContact/EmergencyContactAdd'
+import EmergencyContactEdit from './EmergencyContact/EmergencyContactEdit'
+import WorkHourInput from '../../UI/input/WorkHourInput'
+import { initialWorkingHourData } from '../../UI/input/WorkHourInput'
 
 const CheckboxGroup = Checkbox.Group
 const { Option } = Select
@@ -95,6 +97,7 @@ export class PersonalInfoForm extends Component {
 			contacts: [],
 			contactEditingData: null,
 			targetKeys: [],
+			workingHours: initialWorkingHourData,
 		}
 	}
 	render() {
@@ -584,6 +587,13 @@ export class PersonalInfoForm extends Component {
 						<Label as='a' color='teal' ribbon>
 							Specify days / hours you may be available
 						</Label>
+						<Row style={{ marginTop: '10px' }}>
+							<Col md='12'>
+								<WorkHourInput
+									onWorkingHourChange={(workingHours) => this.setState({ workingHours })}
+								/>
+							</Col>
+						</Row>
 					</Segment>
 				</Form>
 				{/* <button onClick={() => this.formRef.current.submit()}>Submit</button> */}

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Form, Select, Input, Button } from 'antd'
 import { SaveOutlined } from '@ant-design/icons'
 
-import { phoneValidationRegex } from '../../../utils/helpers'
-import { phoneTypes, relationshipTypes } from './index'
+import { phoneValidationRegex } from '../../../../utils/helpers'
+import { phoneTypes, relationshipTypes } from '../index'
 
 const { Option } = Select
 
