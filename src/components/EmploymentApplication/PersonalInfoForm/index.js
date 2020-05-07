@@ -12,9 +12,15 @@ import {
 	DatePicker,
 	Checkbox,
 	Radio,
+	message,
 } from 'antd'
 import { Container, Row, Col } from 'styled-bootstrap-grid'
-import { PlusOutlined } from '@ant-design/icons'
+import {
+	PlusOutlined,
+	LeftCircleOutlined,
+	CloseCircleOutlined,
+	SaveOutlined,
+} from '@ant-design/icons'
 
 import { phoneValidationRegex } from '../../../utils/helpers'
 import EmergencyContactTable from './EmergencyContact/EmergencyContactTable'
@@ -78,10 +84,69 @@ export const salaryTypes = [
 ]
 
 const FIELD_LICENSE_EVER_SUSPENDED = 'everLicenseSuspended'
+const FIELD_HAVE_CAR_LICENSE = 'haveCarLicense'
+
+const formInitialValues = { [FIELD_LICENSE_EVER_SUSPENDED]: false, [FIELD_HAVE_CAR_LICENSE]: false }
 
 export class PersonalInfoForm extends Component {
+	componentWillUnmount() {
+		this.mounted = false
+	}
+	componentDidMount() {
+		this.mounted = true
+	}
+
+	startProcessing = (saveAndContinue = false) => {
+		this.mounted && this.setState({ formProcessing: true })
+		const hide = message.loading('Processing form..', 0)
+		// 1. Emergency Contact Validation
+		if (this.state.contacts.length === 0) {
+			message.error('Please add emergency contact!')
+			hide()
+			this.mounted && this.setState({ formProcessing: false })
+			return
+		}
+		// 2. Working Hours Validation
+		const workingHours = this.state.workingHours
+		const workingHoursValueList = new Set(
+			Object.keys(workingHours)
+				.map((x) => workingHours[x])
+				.map((y) => {
+					const values = []
+					Object.keys(y).forEach((item) => {
+						if (typeof y[item] === 'boolean') {
+							values.push(y[item].toString())
+						}
+					})
+					return values
+				})
+				.flat()
+		)
+		// console.log(workingHoursValueList)
+		if (workingHoursValueList.size === 1 && workingHoursValueList.has('false')) {
+			message.error('Please select working hours!')
+			hide()
+			this.mounted && this.setState({ formProcessing: false })
+			return
+		}
+		this.formRef.current
+			.validateFields()
+			.then((values) => {
+				hide()
+				console.log('Success:', values)
+				this.mounted && this.setState({ formProcessing: false })
+			})
+			.catch((errorInfo) => {
+				hide()
+				message.error('Please fix the form errors!')
+				this.mounted && this.setState({ formProcessing: false })
+				console.log('Failed:', errorInfo)
+			})
+	}
+
 	onFinish = (values) => {
 		console.log('Success:', values)
+		// Save & Continue
 	}
 
 	onFinishFailed = (errorInfo) => {
@@ -92,12 +157,14 @@ export class PersonalInfoForm extends Component {
 		super(props)
 		this.formRef = React.createRef()
 		this.state = {
+			formProcessing: false,
 			contactAddModal: false,
 			contactEditModal: false,
 			contacts: [],
 			contactEditingData: null,
 			targetKeys: [],
 			workingHours: initialWorkingHourData,
+			...formInitialValues,
 		}
 	}
 	render() {
@@ -108,7 +175,7 @@ export class PersonalInfoForm extends Component {
 					onFinishFailed={this.onFinishFailed}
 					ref={this.formRef}
 					labelAlign='left'
-					initialValues={{ [FIELD_LICENSE_EVER_SUSPENDED]: false }}
+					initialValues={formInitialValues}
 				>
 					{/* 1. Position Applying for */}
 					<Segment raised>
@@ -517,22 +584,40 @@ export class PersonalInfoForm extends Component {
 									Has your license ever been suspended or revoked?
 								</span>
 								<Form.Item name={FIELD_LICENSE_EVER_SUSPENDED}>
-									<Radio.Group>
+									<Radio.Group
+										onChange={(e) =>
+											this.setState({ [FIELD_LICENSE_EVER_SUSPENDED]: e.target.value })
+										}
+									>
 										<Radio value={true}>Yes</Radio>
 										<Radio value={false}>No</Radio>
 									</Radio.Group>
 								</Form.Item>
 							</Col>
 						</Row>
-						<Row style={{ marginTop: '10px' }}>
-							<Col md='12' style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-								<span style={{ marginRight: 10, marginBottom: 5 }}>If yes, please explain</span>
-								<Form.Item name='explainLicenseSuspend' style={{ width: '100%' }}>
-									<TextArea rows={2} placeholder='Explain..' />
-								</Form.Item>
-							</Col>
-						</Row>
-						<Row style={{ marginTop: '10px' }}>
+						{this.state[FIELD_LICENSE_EVER_SUSPENDED] && (
+							<Row>
+								<Col md='12'>
+									<Form.Item
+										label='Please explain'
+										name='explainLicenseSuspend'
+										validateFirst={true}
+										rules={[
+											{
+												required: this.state[FIELD_LICENSE_EVER_SUSPENDED],
+												message: 'Please explain why suspended!',
+											},
+											{ whitespace: true, message: 'Invalid input!' },
+											{ min: 2, message: 'Too short!' },
+											{ max: 250, message: 'Too long!' },
+										]}
+									>
+										<TextArea rows={2} placeholder='Explain...' />
+									</Form.Item>
+								</Col>
+							</Row>
+						)}
+						<Row style={{ marginTop: '10px', marginBottom: '10px' }}>
 							<Col md='4'>
 								<Form.Item
 									label='Salary Requirements'
@@ -581,9 +666,7 @@ export class PersonalInfoForm extends Component {
 								</Form.Item>
 							</Col>
 						</Row>
-					</Segment>
-					{/* Specify days / hours you may be available */}
-					<Segment raised>
+						{/* Specify days / hours you may be available */}
 						<Label as='a' color='teal' ribbon>
 							Specify days / hours you may be available
 						</Label>
@@ -594,9 +677,119 @@ export class PersonalInfoForm extends Component {
 								/>
 							</Col>
 						</Row>
+						<Row style={{ marginTop: '10px' }}>
+							<Col md='3'>
+								<Form.Item
+									label='Do you have a current driver’s license?'
+									name={FIELD_HAVE_CAR_LICENSE}
+								>
+									<Radio.Group
+										onChange={(e) => this.setState({ [FIELD_HAVE_CAR_LICENSE]: e.target.value })}
+									>
+										<Radio value={true}>Yes</Radio>
+										<Radio value={false}>No</Radio>
+									</Radio.Group>
+								</Form.Item>
+							</Col>
+							{this.state[FIELD_HAVE_CAR_LICENSE] && (
+								<>
+									<Col md='4'>
+										<Form.Item
+											label='Select state'
+											name='drivingLicenseIssuedState'
+											rules={[
+												{
+													required: this.state[FIELD_HAVE_CAR_LICENSE],
+													message: 'Select issued state!',
+												},
+												{ whitespace: true, message: 'Select issued state!' },
+											]}
+										>
+											<Select showSearch allowClear={true} placeholder='Select issued state'>
+												{states.map((type) => {
+													const { key, name, value } = type
+													return (
+														<Option key={key} value={value}>
+															{name}
+														</Option>
+													)
+												})}
+											</Select>
+										</Form.Item>
+									</Col>
+									<Col md='5'>
+										<Form.Item
+											label='License'
+											name='drivingLicense'
+											validateFirst={true}
+											rules={[
+												{
+													required: this.state[FIELD_HAVE_CAR_LICENSE],
+													message: 'Provide license!',
+												},
+												{ whitespace: true, message: 'Invalid driving license!' },
+												{ min: 2, message: 'Too short!' },
+												{ max: 250, message: 'Too long!' },
+											]}
+										>
+											<Input allowClear={true} placeholder='License' />
+										</Form.Item>
+									</Col>
+								</>
+							)}
+						</Row>
 					</Segment>
+					<Row style={{ marginTop: 20 }}>
+						<Col md='4' style={{ marginBottom: 10, display: 'flex', justifyContent: 'center' }}>
+							<Button
+								icon={<LeftCircleOutlined />}
+								type='primary'
+								htmlType='button'
+								disabled={this.state.formProcessing}
+								onClick={() => {}}
+							>
+								Previous
+							</Button>
+						</Col>
+
+						<Col md='4' style={{ marginBottom: 10, display: 'flex', justifyContent: 'center' }}>
+							<Button
+								icon={<CloseCircleOutlined />}
+								type='primary'
+								htmlType='button'
+								style={{ marginRight: 10 }}
+								disabled={this.state.formProcessing}
+								onClick={() => {
+									this.setState({ ...formInitialValues })
+									this.formRef.current.resetFields()
+								}}
+							>
+								Clear All
+							</Button>
+							<Button
+								icon={<SaveOutlined />}
+								type='primary'
+								htmlType='button'
+								disabled={this.state.formProcessing}
+								onClick={() => this.startProcessing(false)} // 'false' for not to leave
+							>
+								Save for Later
+							</Button>
+						</Col>
+
+						<Col md='4' style={{ display: 'flex', justifyContent: 'center' }}>
+							<Button
+								icon={<SaveOutlined />}
+								type='primary'
+								htmlType='button'
+								disabled={this.state.formProcessing}
+								onClick={() => this.startProcessing(true)} // 'true' for continue next
+							>
+								Save and Continue
+							</Button>
+						</Col>
+					</Row>
 				</Form>
-				{/* <button onClick={() => this.formRef.current.submit()}>Submit</button> */}
 			</Container>
 		)
 	}
