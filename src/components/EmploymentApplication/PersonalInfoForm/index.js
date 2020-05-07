@@ -98,10 +98,10 @@ export class PersonalInfoForm extends Component {
 
 	startProcessing = (saveAndContinue = false) => {
 		this.mounted && this.setState({ formProcessing: true })
-		const hide = message.loading('Processing form..', 0)
+		const hide = message.loading('Processing form...', 0)
 		// 1. Emergency Contact Validation
 		if (this.state.contacts.length === 0) {
-			message.error('Please add emergency contact!')
+			message.error('Please add emergency contacts!')
 			hide()
 			this.mounted && this.setState({ formProcessing: false })
 			return
@@ -135,6 +135,10 @@ export class PersonalInfoForm extends Component {
 				hide()
 				console.log('Success:', values)
 				this.mounted && this.setState({ formProcessing: false })
+				// TODO: Implement mechanism to save
+				if (saveAndContinue) {
+					this.props.goToNextTab()
+				}
 			})
 			.catch((errorInfo) => {
 				hide()
@@ -539,8 +543,8 @@ export class PersonalInfoForm extends Component {
 									name='license'
 									rules={[
 										{ whitespace: true, required: true, message: 'Provide license/certification!' },
-										{ min: 2, message: 'Too short!' },
-										{ max: 30, message: 'Too long!' },
+										{ min: 3, message: 'Too short!' },
+										{ max: 200, message: 'Too long!' },
 									]}
 								>
 									<Input allowClear={true} placeholder='License/Certification' />
@@ -608,7 +612,7 @@ export class PersonalInfoForm extends Component {
 												message: 'Please explain why suspended!',
 											},
 											{ whitespace: true, message: 'Invalid input!' },
-											{ min: 2, message: 'Too short!' },
+											{ min: 10, message: 'Too short!' },
 											{ max: 250, message: 'Too long!' },
 										]}
 									>
@@ -728,7 +732,7 @@ export class PersonalInfoForm extends Component {
 													message: 'Provide license!',
 												},
 												{ whitespace: true, message: 'Invalid driving license!' },
-												{ min: 2, message: 'Too short!' },
+												{ min: 5, message: 'Too short!' },
 												{ max: 250, message: 'Too long!' },
 											]}
 										>
@@ -745,8 +749,8 @@ export class PersonalInfoForm extends Component {
 								icon={<LeftCircleOutlined />}
 								type='primary'
 								htmlType='button'
-								disabled={this.state.formProcessing}
-								onClick={() => {}}
+								disabled={this.state.formProcessing || !this.props.prevTabId}
+								onClick={() => this.props.goToPrevTab()}
 							>
 								Previous
 							</Button>

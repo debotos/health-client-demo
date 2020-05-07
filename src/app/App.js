@@ -53,7 +53,14 @@ class App extends Component {
 	renderTabBar = (props, DefaultTabBar) => (
 		<Sticky bottomOffset={80}>
 			{({ style, isSticky }) => (
-				<div style={{ ...style, zIndex: 9, backgroundColor: isSticky ? '#fff' : 'transparent' }}>
+				<div
+					style={{
+						...style,
+						zIndex: 9,
+						backgroundColor: isSticky ? '#fff' : 'transparent',
+						pointerEvents: 'none',
+					}}
+				>
 					<DefaultTabBar {...props} style={{ textAlign: 'center', backgroundColor: '#fff' }} />
 					{this.getProgress()}
 				</div>
@@ -82,6 +89,7 @@ class App extends Component {
 
 	render() {
 		const { current } = this.state
+
 		return (
 			<>
 				<Header />
@@ -95,6 +103,10 @@ class App extends Component {
 						onChange={this.onTabChange}
 					>
 						{tabs.map((tab, index) => {
+							const totalTabs = tabs.length
+							const currentTabPosition = index + 1
+							const nextTabId = currentTabPosition < totalTabs ? tabs[index + 1].id : null
+							const prevTabId = currentTabPosition !== 1 ? tabs[index - 1].id : null
 							const { id, title, icon, component: ApplicationForm } = tab
 							const TabHead = (
 								<TabHeadItem>
@@ -106,7 +118,21 @@ class App extends Component {
 							return (
 								<TabPane tab={TabHead} key={id}>
 									<div style={{ paddingBottom: '25px' }}>
-										<ApplicationForm id={id} />
+										<ApplicationForm
+											id={id}
+											nextTabId={nextTabId}
+											prevTabId={prevTabId}
+											goToNextTab={() => {
+												if (nextTabId) {
+													this.setState({ current: nextTabId })
+												}
+											}}
+											goToPrevTab={() => {
+												if (prevTabId) {
+													this.setState({ current: prevTabId })
+												}
+											}}
+										/>
 									</div>
 								</TabPane>
 							)
