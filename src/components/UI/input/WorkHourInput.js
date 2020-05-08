@@ -39,7 +39,7 @@ export default function WorkHourInput(props) {
 	return (
 		<>
 			<Desktop>
-				<DesktopWorkHourInput {...props} />'
+				<DesktopWorkHourInput {...props} />
 			</Desktop>
 			<MobileOrTablet>
 				<MobileAndTabWorkHourInput {...props} />
