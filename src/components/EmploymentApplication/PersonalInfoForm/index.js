@@ -147,7 +147,7 @@ export class PersonalInfoForm extends Component {
 			.validateFields()
 			.then((values) => {
 				hide()
-				console.log('Success:', values)
+				console.log('Success:', values, this.state.contacts, this.state.workingHours)
 				this.mounted && this.setState({ formProcessing: false })
 				// TODO: Adjust fields(like convert all date fields from moment to string)
 				// TODO: Implement mechanism to save

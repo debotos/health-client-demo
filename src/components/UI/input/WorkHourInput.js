@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Checkbox, Collapse } from 'antd'
+import { Collapse } from 'antd'
 import styled from 'styled-components'
 import { clone } from 'ramda'
 
@@ -39,7 +39,7 @@ export default function WorkHourInput(props) {
 	return (
 		<>
 			<Desktop>
-				<DesktopWorkHourInput {...props} />
+				<DesktopWorkHourInput {...props} />'
 			</Desktop>
 			<MobileOrTablet>
 				<MobileAndTabWorkHourInput {...props} />
@@ -76,7 +76,7 @@ export class DesktopWorkHourInput extends Component {
 			<Table>
 				<Thead>
 					<Tr>
-						<Th>Time</Th>
+						<Th style={{ textAlign: 'center' }}>Time</Th>
 						<Th style={{ textAlign: 'center' }}>Sunday</Th>
 						<Th style={{ textAlign: 'center' }}>Monday</Th>
 						<Th style={{ textAlign: 'center' }}>Tuesday</Th>
@@ -91,7 +91,7 @@ export class DesktopWorkHourInput extends Component {
 						const { key, time, ...values } = currentItem
 						return (
 							<Tr key={key}>
-								<Td>{time}</Td>
+								<Td style={{ textAlign: 'center' }}>{time}</Td>
 								{Object.keys(values).map((day) => {
 									const isChecked = currentItem[day]
 									return (
@@ -99,9 +99,7 @@ export class DesktopWorkHourInput extends Component {
 											key={`${day}_${key}`}
 											style={{ padding: 0, backgroundColor: isChecked ? '#9185ff7d' : '#fff' }}
 											onClick={(e) => this.handleChange(key, day, !isChecked, currentItem)}
-										>
-											<Checkbox checked={values[day]} />
-										</DesktopClickableTd>
+										/>
 									)
 								})}
 							</Tr>
@@ -153,10 +151,10 @@ export class MobileAndTabWorkHourInput extends Component {
 							<thead>
 								<tr>
 									<th style={{ textAlign: 'center' }}>Time</th>
-									<th style={{ textAlign: 'center' }}>Sunday</th>
-									<th style={{ textAlign: 'center' }}>Monday</th>
-									<th style={{ textAlign: 'center' }}>Tuesday</th>
-									<th style={{ textAlign: 'center' }}>Wednesday</th>
+									<th style={{ textAlign: 'center' }}>Sun</th>
+									<th style={{ textAlign: 'center' }}>Mon</th>
+									<th style={{ textAlign: 'center' }}>Tue</th>
+									<th style={{ textAlign: 'center' }}>Wed</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -172,13 +170,8 @@ export class MobileAndTabWorkHourInput extends Component {
 													<MobileClickableTd
 														key={`${day}_${key}`}
 														onClick={(e) => this.handleChange(key, day, !isChecked, currentItem)}
-														style={{
-															padding: 0,
-															backgroundColor: isChecked ? '#9185ff7d' : '#fff',
-														}}
-													>
-														<Checkbox checked={values[day]} />
-													</MobileClickableTd>
+														style={{ backgroundColor: isChecked ? '#9185ff7d' : '#fff' }}
+													/>
 												)
 											})}
 										</tr>
@@ -194,9 +187,9 @@ export class MobileAndTabWorkHourInput extends Component {
 							<thead>
 								<tr>
 									<th style={{ textAlign: 'center' }}>Time</th>
-									<th style={{ textAlign: 'center' }}>Thursday</th>
-									<th style={{ textAlign: 'center' }}>Friday</th>
-									<th style={{ textAlign: 'center' }}>Saturday</th>
+									<th style={{ textAlign: 'center' }}>Thu</th>
+									<th style={{ textAlign: 'center' }}>Fri</th>
+									<th style={{ textAlign: 'center' }}>Sat</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -213,9 +206,7 @@ export class MobileAndTabWorkHourInput extends Component {
 														key={`${day}_${key}`}
 														onClick={(e) => this.handleChange(key, day, !isChecked, currentItem)}
 														style={{ backgroundColor: isChecked ? '#9185ff7d' : '#fff' }}
-													>
-														<Checkbox checked={values[day]} />
-													</MobileClickableTd>
+													/>
 												)
 											})}
 										</tr>
@@ -232,6 +223,6 @@ export class MobileAndTabWorkHourInput extends Component {
 
 const MobileClickableTd = styled.td`
 	cursor: pointer;
-	min-width: 75px;
 	text-align: center;
+	width: 25%;
 `
