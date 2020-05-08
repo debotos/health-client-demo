@@ -97,8 +97,8 @@ export class DesktopWorkHourInput extends Component {
 									return (
 										<DesktopClickableTd
 											key={`${day}_${key}`}
-											style={{ padding: 0, backgroundColor: isChecked ? '#9185ff7d' : '#fff' }}
 											onClick={(e) => this.handleChange(key, day, !isChecked, currentItem)}
+											checked={isChecked}
 										/>
 									)
 								})}
@@ -115,6 +115,9 @@ const DesktopClickableTd = styled(Td)`
 	cursor: pointer;
 	min-width: 75px;
 	text-align: center;
+	background-color: ${(props) => (props.checked ? '#9185ff7d' : '#fff')};
+	border-bottom: ${(props) => props.checked && 'none !important'};
+	border-top: ${(props) => props.checked && 'none !important'};
 `
 
 /* For Mobile & Tab */
@@ -170,7 +173,7 @@ export class MobileAndTabWorkHourInput extends Component {
 													<MobileClickableTd
 														key={`${day}_${key}`}
 														onClick={(e) => this.handleChange(key, day, !isChecked, currentItem)}
-														style={{ backgroundColor: isChecked ? '#9185ff7d' : '#fff' }}
+														checked={isChecked}
 													/>
 												)
 											})}
@@ -205,7 +208,8 @@ export class MobileAndTabWorkHourInput extends Component {
 													<MobileClickableTd
 														key={`${day}_${key}`}
 														onClick={(e) => this.handleChange(key, day, !isChecked, currentItem)}
-														style={{ backgroundColor: isChecked ? '#9185ff7d' : '#fff' }}
+														style={{ width: '30%' }}
+														checked={isChecked}
 													/>
 												)
 											})}
@@ -225,4 +229,7 @@ const MobileClickableTd = styled.td`
 	cursor: pointer;
 	text-align: center;
 	width: 25%;
+	background-color: ${(props) => (props.checked ? '#9185ff7d' : '#fff')};
+	border-bottom: ${(props) => props.checked && 'none !important'};
+	border-top: ${(props) => props.checked && 'none !important'};
 `
