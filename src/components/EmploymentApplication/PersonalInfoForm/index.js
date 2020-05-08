@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { clone } from 'ramda'
 import { Label, Segment } from 'semantic-ui-react'
 import {
 	Form,
@@ -22,7 +23,7 @@ import {
 	SaveOutlined,
 } from '@ant-design/icons'
 
-import { phoneValidationRegex } from '../../../utils/helpers'
+import { phoneValidationRegex, randomString } from '../../../utils/helpers'
 import EmergencyContactTable from './EmergencyContact/EmergencyContactTable'
 import EmergencyContactAdd from './EmergencyContact/EmergencyContactAdd'
 import EmergencyContactEdit from './EmergencyContact/EmergencyContactEdit'
@@ -92,25 +93,29 @@ export class PersonalInfoForm extends Component {
 	componentWillUnmount() {
 		this.mounted = false
 	}
+
 	componentDidMount() {
 		this.mounted = true
+	}
+
+	handleClearAll = () => {
+		this.setState({ ...formInitialValues })
+		this.formRef.current.resetFields()
+		this.setState({
+			reRenderKey: randomString(10), // Re-render the WorkHourInput component to reset
+			workingHours: clone(initialWorkingHourData),
+		})
 	}
 
 	startProcessing = (saveAndContinue = false) => {
 		this.mounted && this.setState({ formProcessing: true })
 		const hide = message.loading('Processing form...', 0)
-		// 1. Emergency Contact Validation
-		if (this.state.contacts.length === 0) {
-			message.error('Please add emergency contacts!')
-			hide()
-			this.mounted && this.setState({ formProcessing: false })
-			return
-		}
-		// 2. Working Hours Validation
-		const workingHours = this.state.workingHours
+
+		// 1. Working Hours Validation
+		const workingHours = clone(this.state.workingHours)
+		console.log(workingHours)
 		const workingHoursValueList = new Set(
-			Object.keys(workingHours)
-				.map((x) => workingHours[x])
+			workingHours
 				.map((y) => {
 					const values = []
 					Object.keys(y).forEach((item) => {
@@ -129,12 +134,22 @@ export class PersonalInfoForm extends Component {
 			this.mounted && this.setState({ formProcessing: false })
 			return
 		}
+
+		// 2. Emergency Contact Validation
+		if (this.state.contacts.length === 0) {
+			message.error('Please add emergency contacts!')
+			hide()
+			this.mounted && this.setState({ formProcessing: false })
+			return
+		}
+
 		this.formRef.current
 			.validateFields()
 			.then((values) => {
 				hide()
 				console.log('Success:', values)
 				this.mounted && this.setState({ formProcessing: false })
+				// TODO: Adjust fields(like convert all date fields from moment to string)
 				// TODO: Implement mechanism to save
 				if (saveAndContinue) {
 					this.props.goToNextTab()
@@ -161,13 +176,14 @@ export class PersonalInfoForm extends Component {
 		super(props)
 		this.formRef = React.createRef()
 		this.state = {
+			reRenderKey: randomString(10),
 			formProcessing: false,
 			contactAddModal: false,
 			contactEditModal: false,
 			contacts: [],
 			contactEditingData: null,
 			targetKeys: [],
-			workingHours: initialWorkingHourData,
+			workingHours: clone(initialWorkingHourData),
 			...formInitialValues,
 		}
 	}
@@ -677,6 +693,7 @@ export class PersonalInfoForm extends Component {
 						<Row style={{ marginTop: '10px' }}>
 							<Col md='12'>
 								<WorkHourInput
+									key={this.state.reRenderKey}
 									onWorkingHourChange={(workingHours) => this.setState({ workingHours })}
 								/>
 							</Col>
@@ -763,10 +780,7 @@ export class PersonalInfoForm extends Component {
 								htmlType='button'
 								style={{ marginRight: 10 }}
 								disabled={this.state.formProcessing}
-								onClick={() => {
-									this.setState({ ...formInitialValues })
-									this.formRef.current.resetFields()
-								}}
+								onClick={this.handleClearAll}
 							>
 								Clear All
 							</Button>

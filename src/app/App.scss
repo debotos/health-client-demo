@@ -14,6 +14,14 @@ body {
 	}
 }
 
+.customTable {
+	border: 1px solid rgba(34, 36, 38, 0.1);
+	th,
+	td {
+		border: 1px solid rgba(34, 36, 38, 0.1);
+		padding: 0.5em 0.5em;
+	}
+}
 /* antd style override */
 .ant-row.ant-form-item {
 	flex-direction: column; /* Label & Input field align vertically */
@@ -92,5 +100,12 @@ body {
 				transform: rotate(90deg);
 			}
 		}
+	}
+}
+
+/* Override via custom antd class */
+.mobile-working-hour-input-collapse {
+	.ant-collapse-content-box {
+		padding: 0;
 	}
 }
