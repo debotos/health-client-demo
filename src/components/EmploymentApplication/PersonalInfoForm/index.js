@@ -52,11 +52,13 @@ const positions = [
 	{ key: 4, name: 'PTA', value: 'PTA' },
 ]
 
-const states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DE', 'FL', 'GA'].map((x, i) => ({
-	key: i,
-	name: x,
-	value: x,
-}))
+export const states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DE', 'FL', 'GA'].map(
+	(x, i) => ({
+		key: i,
+		name: x,
+		value: x,
+	})
+)
 
 export const phoneTypes = [
 	{ key: 1, name: 'Home', value: 'Home' },
@@ -479,7 +481,7 @@ export class PersonalInfoForm extends Component {
 								const update = this.state.contacts.filter((x) => x.key !== key)
 								this.setState({ contacts: update })
 							}}
-							editContactData={(contactData) => {
+							onEdit={(contactData) => {
 								this.setState({ contactEditingData: contactData }, () =>
 									this.setState({ contactEditModal: true })
 								)

@@ -1,34 +1,52 @@
 import React, { Component } from 'react'
 import { Popconfirm, Table } from 'antd'
+import moment from 'moment'
 
-export class EmergencyContactTable extends Component {
+export class EducationInfoTable extends Component {
 	constructor(props) {
 		super(props)
 		this.columns = [
 			{
-				title: 'Relationship Type',
-				dataIndex: 'relationshipType',
-				key: 'relationshipType',
+				title: 'Type',
+				dataIndex: 'type',
+				key: 'type',
 			},
 			{
-				title: 'First Name',
-				dataIndex: 'first',
-				key: 'first',
+				title: 'Name',
+				dataIndex: 'name',
+				key: 'name',
 			},
 			{
-				title: 'Last Name',
-				dataIndex: 'last',
-				key: 'last',
+				title: 'City',
+				dataIndex: 'city',
+				key: 'city',
 			},
 			{
-				title: 'Phone Type',
-				dataIndex: 'phoneType',
-				key: 'phoneType',
+				title: 'State',
+				dataIndex: 'state',
+				key: 'state',
 			},
 			{
-				title: 'Phone',
-				dataIndex: 'phoneNumber',
-				key: 'phoneNumber',
+				title: 'Start Date',
+				dataIndex: 'startDate',
+				key: 'startDate',
+				render: (value, record) => moment(value).format('MM/DD/YYYY'),
+			},
+			{
+				title: 'End Date',
+				dataIndex: 'endDate',
+				key: 'endDate',
+				render: (value, record) => moment(value).format('MM/DD/YYYY'),
+			},
+			{
+				title: 'Degree Awarded',
+				dataIndex: 'degreeAwarded',
+				key: 'degreeAwarded',
+			},
+			{
+				title: 'Major Field',
+				dataIndex: 'majorField',
+				key: 'majorField',
 			},
 			{
 				title: 'Actions',
@@ -62,4 +80,4 @@ export class EmergencyContactTable extends Component {
 	}
 }
 
-export default EmergencyContactTable
+export default EducationInfoTable

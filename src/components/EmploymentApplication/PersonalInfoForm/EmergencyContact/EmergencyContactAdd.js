@@ -103,7 +103,7 @@ export class EmergencyContactAdd extends Component {
 				</Form.Item>
 
 				<div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
-					<Button icon={<PlusOutlined />} onClick={this.handleAdd} type='primary' htmlType='submit'>
+					<Button icon={<PlusOutlined />} type='primary' htmlType='submit'>
 						Add
 					</Button>
 				</div>
