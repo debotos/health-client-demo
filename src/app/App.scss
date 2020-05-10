@@ -109,3 +109,16 @@ body {
 		padding: 0;
 	}
 }
+
+.ant-modal-wrap.antd-full-screen-modal {
+	.ant-modal {
+		width: 95% !important;
+		max-width: 1100px !important;
+	}
+}
+
+.ant-upload-hint,
+.ant-upload-text {
+	padding-left: 10px;
+	padding-right: 10px;
+}

@@ -83,7 +83,7 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			current: tabs[1].id, // TODO: access 0 number item
+			current: tabs[2].id, // TODO: access 0 number item
 		}
 	}
 
