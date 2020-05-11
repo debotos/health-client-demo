@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
 import { Container, Row, Col } from 'styled-bootstrap-grid'
 import { Label, Segment } from 'semantic-ui-react'
-import { Button, Checkbox, Form, Input, DatePicker } from 'antd'
+import { Button, Checkbox, Form, Input, DatePicker, message } from 'antd'
 import moment from 'moment'
 import { StepForwardOutlined } from '@ant-design/icons'
 import { clone } from 'ramda'
 
 export class AgreementInfoForm extends Component {
 	onFinish = (values) => {
-		console.log('Success:', values)
 		// this.formRef.current.resetFields()
-		const { id, formValues } = this.props
+		const { tabs, id, formValues } = this.props
 		const finalValues = { [id]: values, ...clone(formValues) }
 		console.log('Final values =>', finalValues)
+		const tabIds = tabs.map((x) => x.id)
+		const sectionIds = Object.keys(finalValues)
+		if (!tabIds.every((id) => sectionIds.includes(id))) {
+			message.error('Missing required form fields!')
+			return
+		}
+		// TODO: Adust and send it to backend via AJAX call
 		this.props.onSuccessfulSubmit()
 	}
 

@@ -148,6 +148,7 @@ class App extends Component {
 								<TabPane tab={TabHead} key={id}>
 									<div style={{ paddingBottom: '25px' }}>
 										<ApplicationForm
+											tabs={tabs}
 											id={id}
 											nextTabId={nextTabId}
 											prevTabId={prevTabId}
