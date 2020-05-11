@@ -13,6 +13,7 @@ export class AgreementInfoForm extends Component {
 		const { id, formValues } = this.props
 		const finalValues = { [id]: values, ...clone(formValues) }
 		console.log('Final values =>', finalValues)
+		this.props.onSuccessfulSubmit()
 	}
 
 	onFinishFailed = (errorInfo) => {

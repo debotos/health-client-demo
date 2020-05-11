@@ -29,3 +29,10 @@ export const phoneValidationRegex = new RegExp(/^[\s()+-]*([0-9][\s()+-]*){6,20}
 export const validatePhone = (mobile = '') => {
 	return phoneValidationRegex.test(mobile)
 }
+
+export function limitNumberWithinRange(num, min, max) {
+	const MIN = min || 0
+	const MAX = max || 100
+	const parsed = parseInt(num)
+	return Math.min(Math.max(parsed, MIN), MAX)
+}

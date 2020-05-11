@@ -9,6 +9,7 @@ import { FaRegUser, FaLandmark, FaUserTie, FaRegFileAlt, FaRegHandshake } from '
 
 import './App.scss'
 import Header from '../components/common/Header'
+import { limitNumberWithinRange } from '../utils/helpers'
 /* Forms */
 import AgreementInfoForm from '../components/EmploymentApplication/AgreementInfoForm'
 import EducationInfoForm from '../components/EmploymentApplication/EducationInfoForm'
@@ -72,7 +73,7 @@ class App extends Component {
 	getProgress = () => {
 		return (
 			<Container>
-				<Progress progress='percent' percent={50} success size='small' />
+				<Progress progress='percent' percent={this.state.percent} success size='small' />
 			</Container>
 		)
 	}
@@ -81,14 +82,29 @@ class App extends Component {
 		this.setState({ current: key })
 	}
 
-	goToTab = (nextTabId, values = null) => {
+	goToTab = (tabId, values = null, forward) => {
 		if (values) {
 			const { current: currentTabId } = this.state
 			const formValues = clone(this.state.formValues)
 			formValues[currentTabId] = values
 			this.setState({ formValues })
 		}
-		this.setState({ current: nextTabId })
+
+		const { percent } = this.state
+		const eachTab = 100 / tabs.length
+		if (forward) {
+			// console.log(limitNumberWithinRange(percent + eachTab))
+			this.setState({ percent: limitNumberWithinRange(percent + eachTab) })
+		} else {
+			// console.log(limitNumberWithinRange(percent - eachTab))
+			this.setState({ percent: limitNumberWithinRange(percent - eachTab) })
+		}
+
+		this.setState({ current: tabId })
+	}
+
+	handleSuccessfulSubmit = () => {
+		this.setState({ percent: 100 })
 	}
 
 	constructor(props) {
@@ -96,6 +112,7 @@ class App extends Component {
 		this.state = {
 			current: tabs[0].id,
 			formValues: {},
+			percent: 0,
 		}
 	}
 
@@ -134,9 +151,10 @@ class App extends Component {
 											id={id}
 											nextTabId={nextTabId}
 											prevTabId={prevTabId}
-											goToNextTab={(values) => nextTabId && this.goToTab(nextTabId, values)}
-											goToPrevTab={(values) => prevTabId && this.goToTab(prevTabId, values)}
+											goToNextTab={(values) => nextTabId && this.goToTab(nextTabId, values, true)}
+											goToPrevTab={(values) => prevTabId && this.goToTab(prevTabId, values, false)}
 											formValues={formValues}
+											onSuccessfulSubmit={this.handleSuccessfulSubmit}
 										/>
 									</div>
 								</TabPane>
