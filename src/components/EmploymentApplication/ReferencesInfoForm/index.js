@@ -9,11 +9,11 @@ import {
 	SaveOutlined,
 } from '@ant-design/icons'
 
-import AddEducationInfo from './AddEducationInfo'
-import EditEducationInfo from './EditEducationInfo'
-import EducationInfoTable from './EducationInfoTable'
+import AddReferenceInfo from './AddReferenceInfo'
+import EditReferenceInfo from './EditReferenceInfo'
+import ReferenceInfoTable from './ReferenceInfoTable'
 
-export class EducationInfoForm extends Component {
+export class ReferenceInfoForm extends Component {
 	componentWillUnmount() {
 		this.mounted = false
 	}
@@ -23,26 +23,26 @@ export class EducationInfoForm extends Component {
 	}
 
 	startProcessing = (saveAndContinue = false) => {
-		// 1. Education Validation
-		if (this.state.educations.length === 0) {
-			message.error('Please add education!')
+		// 1. Reference Validation
+		if (this.state.references.length === 0) {
+			message.error('Please add reference!')
 			return
 		}
 
 		// TODO: Adjust fields(like convert all date fields from moment to string)
 		// TODO: Implement mechanism to save
 		if (saveAndContinue) {
-			this.props.goToNextTab(this.state.educations)
+			this.props.goToNextTab(this.state.references)
 		}
 	}
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			educationAddModal: false,
-			educationEditModal: false,
-			educationEditingData: null,
-			educations: [],
+			referenceAddModal: false,
+			referenceEditModal: false,
+			referenceEditingData: null,
+			references: [],
 		}
 	}
 
@@ -51,7 +51,7 @@ export class EducationInfoForm extends Component {
 			<Container>
 				<Segment raised>
 					<Label as='a' color='teal' ribbon>
-						Education
+						References(Do not list relatives)
 					</Label>
 					<div style={{ margin: '10px 0', display: 'flex', justifyContent: 'center' }}>
 						<Button
@@ -59,58 +59,60 @@ export class EducationInfoForm extends Component {
 							type='primary'
 							htmlType='button'
 							style={{ marginBottom: 5 }}
-							onClick={() => this.setState({ educationAddModal: true })}
+							onClick={() => this.setState({ referenceAddModal: true })}
 						>
 							Add
 						</Button>
 					</div>
-					<EducationInfoTable
-						data={this.state.educations}
+					<ReferenceInfoTable
+						data={this.state.references}
 						handleDelete={(key) => {
-							const update = this.state.educations.filter((x) => x.key !== key)
-							this.setState({ educations: update })
+							const update = this.state.references.filter((x) => x.key !== key)
+							this.setState({ references: update })
 						}}
-						onEdit={(educationData) => {
-							this.setState({ educationEditingData: educationData }, () =>
-								this.setState({ educationEditModal: true })
+						onEdit={(referenceData) => {
+							this.setState({ referenceEditingData: referenceData }, () =>
+								this.setState({ referenceEditModal: true })
 							)
 						}}
 					/>
 					<Modal
-						title='Add Education'
-						visible={this.state.educationAddModal}
+						title='Add Reference'
+						visible={this.state.referenceAddModal}
 						footer={null}
-						onCancel={() => this.setState({ educationAddModal: false })}
+						onCancel={() => this.setState({ referenceAddModal: false })}
+						wrapClassName='antd-full-screen-modal'
 					>
-						<AddEducationInfo
+						<AddReferenceInfo
 							onAddSuccess={(data) => {
-								const { educations } = this.state
-								this.setState({ educationAddModal: false, educations: [data, ...educations] })
+								const { references } = this.state
+								this.setState({ referenceAddModal: false, references: [data, ...references] })
 							}}
 						/>
 					</Modal>
 					<Modal
 						destroyOnClose={true}
-						title='Edit Education'
-						visible={this.state.educationEditModal}
+						title='Edit Reference'
+						visible={this.state.referenceEditModal}
 						footer={null}
 						onCancel={() =>
-							this.setState({ educationEditModal: false, educationEditingData: null })
+							this.setState({ referenceEditModal: false, referenceEditingData: null })
 						}
+						wrapClassName='antd-full-screen-modal'
 					>
-						<EditEducationInfo
+						<EditReferenceInfo
 							onEditSuccess={(data) => {
-								const { educations } = this.state
-								const update = educations.map((x) => {
+								const { references } = this.state
+								const update = references.map((x) => {
 									if (x.key === data.key) {
 										return data
 									} else {
 										return x
 									}
 								})
-								this.setState({ educationEditModal: false, educations: update })
+								this.setState({ referenceEditModal: false, references: update })
 							}}
-							data={this.state.educationEditingData}
+							data={this.state.referenceEditingData}
 						/>
 					</Modal>
 				</Segment>
@@ -134,8 +136,8 @@ export class EducationInfoForm extends Component {
 							type='primary'
 							htmlType='button'
 							style={{ marginRight: 10 }}
-							disabled={this.state.educations.length === 0}
-							onClick={() => this.setState({ educations: [] })}
+							disabled={this.state.references.length === 0}
+							onClick={() => this.setState({ references: [] })}
 						>
 							Clear All
 						</Button>
@@ -143,7 +145,7 @@ export class EducationInfoForm extends Component {
 							icon={<SaveOutlined />}
 							type='primary'
 							htmlType='button'
-							// disabled={this.state.educations.length === 0}
+							// disabled={this.state.references.length === 0}
 							onClick={() => this.startProcessing(false)} // 'false' for not to leave
 						>
 							Save for Later
@@ -155,7 +157,7 @@ export class EducationInfoForm extends Component {
 							icon={<SaveOutlined />}
 							type='primary'
 							htmlType='button'
-							// disabled={this.state.educations.length === 0}
+							// disabled={this.state.references.length === 0}
 							onClick={() => this.startProcessing(true)} // 'true' for continue next
 						>
 							Save and Continue
@@ -167,4 +169,4 @@ export class EducationInfoForm extends Component {
 	}
 }
 
-export default EducationInfoForm
+export default ReferenceInfoForm

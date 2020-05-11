@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { StickyContainer, Sticky } from 'react-sticky'
 import { Progress } from 'semantic-ui-react'
 import { Tabs } from 'antd'
+import { clone } from 'ramda'
 import { Container } from 'styled-bootstrap-grid'
 import { FaRegUser, FaLandmark, FaUserTie, FaRegFileAlt, FaRegHandshake } from 'react-icons/fa'
 
@@ -80,15 +81,26 @@ class App extends Component {
 		this.setState({ current: key })
 	}
 
+	goToTab = (nextTabId, values = null) => {
+		if (values) {
+			const { current: currentTabId } = this.state
+			const formValues = clone(this.state.formValues)
+			formValues[currentTabId] = values
+			this.setState({ formValues })
+		}
+		this.setState({ current: nextTabId })
+	}
+
 	constructor(props) {
 		super(props)
 		this.state = {
-			current: tabs[2].id, // TODO: access 0 number item
+			current: tabs[0].id,
+			formValues: {},
 		}
 	}
 
 	render() {
-		const { current } = this.state
+		const { current, formValues } = this.state
 
 		return (
 			<>
@@ -122,16 +134,9 @@ class App extends Component {
 											id={id}
 											nextTabId={nextTabId}
 											prevTabId={prevTabId}
-											goToNextTab={() => {
-												if (nextTabId) {
-													this.setState({ current: nextTabId })
-												}
-											}}
-											goToPrevTab={() => {
-												if (prevTabId) {
-													this.setState({ current: prevTabId })
-												}
-											}}
+											goToNextTab={(values) => nextTabId && this.goToTab(nextTabId, values)}
+											goToPrevTab={(values) => prevTabId && this.goToTab(prevTabId, values)}
+											formValues={formValues}
 										/>
 									</div>
 								</TabPane>

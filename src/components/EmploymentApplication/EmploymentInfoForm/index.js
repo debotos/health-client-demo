@@ -38,7 +38,9 @@ export class EmploymentInfoForm extends Component {
 		// TODO: Adjust fields(like convert all date fields from moment to string)
 		// TODO: Implement mechanism to save
 		if (saveAndContinue) {
-			this.props.goToNextTab()
+			const { resume, employmentHistory } = this.state
+			const data = { resume, employmentHistory }
+			this.props.goToNextTab(data)
 		}
 	}
 

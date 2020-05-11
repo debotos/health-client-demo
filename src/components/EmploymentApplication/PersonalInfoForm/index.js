@@ -115,7 +115,7 @@ export class PersonalInfoForm extends Component {
 
 		// 1. Working Hours Validation
 		const workingHours = clone(this.state.workingHours)
-		console.log(workingHours)
+		// console.log(workingHours)
 		const workingHoursValueList = new Set(
 			workingHours
 				.map((y) => {
@@ -154,7 +154,9 @@ export class PersonalInfoForm extends Component {
 				// TODO: Adjust fields(like convert all date fields from moment to string)
 				// TODO: Implement mechanism to save
 				if (saveAndContinue) {
-					this.props.goToNextTab()
+					const { contacts, workingHours } = this.state
+					const data = { contacts, workingHours, ...values }
+					this.props.goToNextTab(data)
 				}
 			})
 			.catch((errorInfo) => {
