@@ -27,8 +27,7 @@ import { phoneValidationRegex, randomString, zipCodeValidationRegex } from '../.
 import EmergencyContactTable from './EmergencyContact/EmergencyContactTable'
 import EmergencyContactAdd from './EmergencyContact/EmergencyContactAdd'
 import EmergencyContactEdit from './EmergencyContact/EmergencyContactEdit'
-import WorkHourInput from '../../UI/input/WorkHourInput'
-import { initialWorkingHourData } from '../../UI/input/WorkHourInput'
+import WorkHourInput, { initialWorkingHourData } from '../../../components/UI/input/WorkHourInput'
 
 const CheckboxGroup = Checkbox.Group
 const { Option } = Select
