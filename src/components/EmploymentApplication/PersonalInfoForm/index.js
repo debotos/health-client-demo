@@ -323,7 +323,7 @@ export class PersonalInfoForm extends Component {
 						{/* Contact Fields */}
 						<Divider style={{ margin: '15px 0 5px 0' }}>Contact</Divider>
 						<Row>
-							<Col md='3'>
+							<Col md='4'>
 								<Form.Item
 									label='Phone Type'
 									name='phoneType'
@@ -341,7 +341,7 @@ export class PersonalInfoForm extends Component {
 									</Select>
 								</Form.Item>
 							</Col>
-							<Col md='3'>
+							<Col md='4'>
 								<Form.Item
 									label='Phone Number'
 									name='phoneNumber'
@@ -353,7 +353,7 @@ export class PersonalInfoForm extends Component {
 									<Input allowClear={true} placeholder='Phone number' />
 								</Form.Item>
 							</Col>
-							<Col md='3'>
+							<Col md='4'>
 								<Form.Item
 									label='Email Address'
 									name='email'
@@ -363,19 +363,6 @@ export class PersonalInfoForm extends Component {
 									]}
 								>
 									<Input allowClear={true} placeholder='Email address' />
-								</Form.Item>
-							</Col>
-							<Col md='3'>
-								<Form.Item
-									label='Social Security No'
-									name='socialSecurityNo'
-									rules={[
-										{ whitespace: true, required: true, message: 'Provide social security no!' },
-										{ min: 2, message: 'Too short!' },
-										{ max: 100, message: 'Too long!' },
-									]}
-								>
-									<Input allowClear={true} placeholder='Social security no' />
 								</Form.Item>
 							</Col>
 						</Row>
