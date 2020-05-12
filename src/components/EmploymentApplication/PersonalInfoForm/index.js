@@ -33,24 +33,6 @@ import { initialWorkingHourData } from '../../UI/input/WorkHourInput'
 const CheckboxGroup = Checkbox.Group
 const { Option } = Select
 const { TextArea } = Input
-const types = [
-	{ key: 1, title: 'RN', value: 'RN' },
-	{ key: 2, title: 'LPN', value: 'LPN' },
-	{ key: 3, title: 'PT', value: 'PT' },
-	{ key: 4, title: 'PTA', value: 'PTA' },
-]
-const countries = [
-	{ key: 1, name: 'Bucks', value: 'Bucks' },
-	{ key: 2, name: 'Carbon', value: 'Carbon' },
-	{ key: 3, name: 'Lehigh', value: 'Lehigh' },
-	{ key: 4, name: 'Northampton', value: 'Northampton' },
-]
-const positions = [
-	{ key: 1, name: 'Pediatrics', value: 'Pediatrics' },
-	{ key: 2, name: 'Infusion Nurse', value: 'Infusion Nurse' },
-	{ key: 3, name: 'Shift Work', value: 'Shift Work' },
-	{ key: 4, name: 'PTA', value: 'PTA' },
-]
 
 export const states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DE', 'FL', 'GA'].map(
 	(x, i) => ({
@@ -201,70 +183,7 @@ export class PersonalInfoForm extends Component {
 					labelAlign='left'
 					initialValues={formInitialValues}
 				>
-					{/* 1. Position Applying for */}
-					<Segment raised>
-						<Label as='a' color='teal' ribbon>
-							Position Applying for
-						</Label>
-
-						<Row style={{ marginTop: '10px' }}>
-							<Col md='4'>
-								<Form.Item
-									label='Type'
-									name='type'
-									rules={[{ whitespace: true, required: true, message: 'Please select type!' }]}
-								>
-									<Select allowClear={true} placeholder='Select Type'>
-										{types.map((type) => {
-											const { key, title, value } = type
-											return (
-												<Option key={key} value={value}>
-													{title}
-												</Option>
-											)
-										})}
-									</Select>
-								</Form.Item>
-							</Col>
-							<Col md='4'>
-								<Form.Item
-									label='Country'
-									name='country'
-									rules={[{ whitespace: true, required: true, message: 'Please select country!' }]}
-								>
-									<Select allowClear={true} placeholder='Select Country'>
-										{countries.map((country) => {
-											const { key, name, value } = country
-											return (
-												<Option key={key} value={value}>
-													{name}
-												</Option>
-											)
-										})}
-									</Select>
-								</Form.Item>
-							</Col>
-							<Col md='4'>
-								<Form.Item
-									label='Position'
-									name='position'
-									rules={[{ whitespace: true, required: true, message: 'Please select position!' }]}
-								>
-									<Select allowClear={true} placeholder='Available Positions'>
-										{positions.map((position) => {
-											const { key, name, value } = position
-											return (
-												<Option key={key} value={value}>
-													{name}
-												</Option>
-											)
-										})}
-									</Select>
-								</Form.Item>
-							</Col>
-						</Row>
-					</Segment>
-					{/* 2. Personal */}
+					{/* Personal */}
 					<Segment raised>
 						<Label as='a' color='teal' ribbon>
 							Personal
@@ -461,7 +380,7 @@ export class PersonalInfoForm extends Component {
 							</Col>
 						</Row>
 					</Segment>
-					{/* 3. Emergency Contact/Relationship */}
+					{/* Emergency Contact/Relationship */}
 					<Segment raised>
 						<Label as='a' color='teal' ribbon>
 							Emergency Contact/Relationship
