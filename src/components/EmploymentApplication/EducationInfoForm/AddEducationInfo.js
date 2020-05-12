@@ -95,6 +95,8 @@ export class EmergencyContactAdd extends Component {
 						format='MM-DD-YYYY'
 						placeholder='Select start date'
 						style={{ width: '100%' }}
+						showToday={false}
+						onChange={() => this.formRef.current.resetFields(['endDate'])}
 					/>
 				</Form.Item>
 
@@ -108,6 +110,11 @@ export class EmergencyContactAdd extends Component {
 						format='MM-DD-YYYY'
 						placeholder='Select date'
 						style={{ width: '100%' }}
+						showToday={false}
+						disabledDate={(current) => {
+							const startDate = this.formRef.current.getFieldValue('startDate')
+							return current && startDate && startDate.endOf('day').valueOf() >= current.valueOf()
+						}}
 					/>
 				</Form.Item>
 

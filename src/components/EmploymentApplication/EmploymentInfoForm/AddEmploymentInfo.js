@@ -178,6 +178,8 @@ export class AddEmploymentInfo extends Component {
 								format='MM-DD-YYYY'
 								placeholder='Select start date'
 								style={{ width: '100%' }}
+								showToday={false}
+								onChange={() => this.formRef.current.resetFields(['endDate'])}
 							/>
 						</Form.Item>
 					</Col>
@@ -192,6 +194,13 @@ export class AddEmploymentInfo extends Component {
 								format='MM-DD-YYYY'
 								placeholder='Select end date'
 								style={{ width: '100%' }}
+								showToday={false}
+								disabledDate={(current) => {
+									const startDate = this.formRef.current.getFieldValue('startDate')
+									return (
+										current && startDate && startDate.endOf('day').valueOf() >= current.valueOf()
+									)
+								}}
 							/>
 						</Form.Item>
 					</Col>

@@ -169,6 +169,8 @@ export class EditEmploymentInfo extends Component {
 								format='MM-DD-YYYY'
 								placeholder='Select start date'
 								style={{ width: '100%' }}
+								showToday={false}
+								onChange={() => this.formRef.current.setFieldsValue({ endDate: null })}
 							/>
 						</Form.Item>
 					</Col>
@@ -183,6 +185,13 @@ export class EditEmploymentInfo extends Component {
 								format='MM-DD-YYYY'
 								placeholder='Select end date'
 								style={{ width: '100%' }}
+								showToday={false}
+								disabledDate={(current) => {
+									const startDate = this.formRef.current.getFieldValue('startDate')
+									return (
+										current && startDate && startDate.endOf('day').valueOf() >= current.valueOf()
+									)
+								}}
 							/>
 						</Form.Item>
 					</Col>
