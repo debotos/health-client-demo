@@ -307,15 +307,15 @@ export class PersonalInfoForm extends Component {
 							</Col>
 							<Col md='2'>
 								<Form.Item
-									label='Country'
-									name='country'
+									label='County'
+									name='county'
 									rules={[
-										{ whitespace: true, required: true, message: 'Provide country!' },
+										{ whitespace: true, required: true, message: 'Provide county!' },
 										{ min: 2, message: 'Too short!' },
 										{ max: 50, message: 'Too long!' },
 									]}
 								>
-									<Input allowClear={true} placeholder='Country name' />
+									<Input allowClear={true} placeholder='County name' />
 								</Form.Item>
 							</Col>
 						</Row>
