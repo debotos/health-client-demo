@@ -23,7 +23,7 @@ import {
 	SaveOutlined,
 } from '@ant-design/icons'
 
-import { phoneValidationRegex, randomString } from '../../../utils/helpers'
+import { phoneValidationRegex, randomString, zipCodeValidationRegex } from '../../../utils/helpers'
 import EmergencyContactTable from './EmergencyContact/EmergencyContactTable'
 import EmergencyContactAdd from './EmergencyContact/EmergencyContactAdd'
 import EmergencyContactEdit from './EmergencyContact/EmergencyContactEdit'
@@ -206,15 +206,15 @@ export class PersonalInfoForm extends Component {
 							</Col>
 							<Col md='3'>
 								<Form.Item
-									label='Middle'
-									name='middle'
+									label='Middle Initial'
+									name='middleInitial'
+									validateFirst={true}
 									rules={[
-										{ whitespace: true, required: true, message: 'Provide middle name!' },
-										{ min: 2, message: 'Too short!' },
-										{ max: 30, message: 'Too long!' },
+										{ whitespace: true, required: false, message: 'Provide middle initial!' },
+										{ max: 1, message: 'Maximum one character!' },
 									]}
 								>
-									<Input allowClear={true} placeholder='Middle name' />
+									<Input allowClear={true} placeholder='Middle initial' />
 								</Form.Item>
 							</Col>
 							<Col md='3'>
@@ -235,7 +235,7 @@ export class PersonalInfoForm extends Component {
 									label='Maiden'
 									name='maiden'
 									rules={[
-										{ whitespace: true, required: true, message: 'Provide maiden name!' },
+										{ whitespace: true, required: false, message: 'Provide maiden name!' },
 										{ min: 2, message: 'Too short!' },
 										{ max: 30, message: 'Too long!' },
 									]}
@@ -296,10 +296,10 @@ export class PersonalInfoForm extends Component {
 								<Form.Item
 									label='Zip code'
 									name='zip'
+									validateFirst={true}
 									rules={[
 										{ whitespace: true, required: true, message: 'Provide zip code!' },
-										{ min: 2, message: 'Too short!' },
-										{ max: 30, message: 'Too long!' },
+										{ pattern: zipCodeValidationRegex, message: 'Invalid zip code!' },
 									]}
 								>
 									<Input allowClear={true} placeholder='Zip code' />
@@ -502,6 +502,7 @@ export class PersonalInfoForm extends Component {
 								>
 									<DatePicker
 										allowClear={true}
+										format='MM-DD-YYYY'
 										placeholder='Select expiration date'
 										style={{ width: '100%' }}
 									/>

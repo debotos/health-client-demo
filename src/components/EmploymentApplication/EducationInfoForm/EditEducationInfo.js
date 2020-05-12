@@ -90,15 +90,25 @@ export class EditEducationInfo extends Component {
 					name='startDate'
 					rules={[{ required: true, message: 'Select start date!' }]}
 				>
-					<DatePicker allowClear={true} placeholder='Select start date' style={{ width: '100%' }} />
+					<DatePicker
+						allowClear={true}
+						format='MM-DD-YYYY'
+						placeholder='Select start date'
+						style={{ width: '100%' }}
+					/>
 				</Form.Item>
 
 				<Form.Item
-					label='End Date'
+					label='Graduation/Projected Graduation Date'
 					name='endDate'
-					rules={[{ required: true, message: 'Select end date!' }]}
+					rules={[{ required: true, message: 'Select date!' }]}
 				>
-					<DatePicker allowClear={true} placeholder='Select end date' style={{ width: '100%' }} />
+					<DatePicker
+						allowClear={true}
+						format='MM-DD-YYYY'
+						placeholder='Select date'
+						style={{ width: '100%' }}
+					/>
 				</Form.Item>
 
 				<Form.Item

@@ -24,7 +24,10 @@ export function hasErrors(fieldsError) {
 	return Object.keys(fieldsError).some((field) => fieldsError[field])
 }
 
-export const phoneValidationRegex = new RegExp(/^[\s()+-]*([0-9][\s()+-]*){6,20}$/)
+// Ref: http://zparacha.com/phone_number_javascript_regex
+export const phoneValidationRegex = new RegExp(/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/)
+// Ref: https://stackoverflow.com/a/160583/8465770
+export const zipCodeValidationRegex = new RegExp(/(^\d{5}$)|(^\d{5}-\d{4}$)/)
 
 export const validatePhone = (mobile = '') => {
 	return phoneValidationRegex.test(mobile)

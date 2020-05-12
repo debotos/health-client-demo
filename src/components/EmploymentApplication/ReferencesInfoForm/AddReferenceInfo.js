@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Row, Col } from 'styled-bootstrap-grid'
 
 import { states, phoneTypes } from '../PersonalInfoForm'
-import { randomString, phoneValidationRegex } from '../../../utils/helpers'
+import { randomString, phoneValidationRegex, zipCodeValidationRegex } from '../../../utils/helpers'
 
 const { Option } = Select
 export const yearsKnown = [
@@ -63,15 +63,15 @@ export class AddReferenceInfo extends Component {
 					</Col>
 					<Col md='3'>
 						<Form.Item
-							label='Middle'
-							name='middle'
+							label='Middle Initial'
+							name='middleInitial'
+							validateFirst={true}
 							rules={[
-								{ whitespace: true, required: true, message: 'Provide middle name!' },
-								{ min: 2, message: 'Too short!' },
-								{ max: 30, message: 'Too long!' },
+								{ whitespace: true, required: false, message: 'Provide middle initial!' },
+								{ max: 1, message: 'Maximum one character!' },
 							]}
 						>
-							<Input allowClear={true} placeholder='Middle name' />
+							<Input allowClear={true} placeholder='Middle initial' />
 						</Form.Item>
 					</Col>
 					<Col md='3'>
@@ -92,7 +92,7 @@ export class AddReferenceInfo extends Component {
 							label='Maiden'
 							name='maiden'
 							rules={[
-								{ whitespace: true, required: true, message: 'Provide maiden name!' },
+								{ whitespace: true, required: false, message: 'Provide maiden name!' },
 								{ min: 2, message: 'Too short!' },
 								{ max: 30, message: 'Too long!' },
 							]}
@@ -153,10 +153,10 @@ export class AddReferenceInfo extends Component {
 						<Form.Item
 							label='Zip code'
 							name='zip'
+							validateFirst={true}
 							rules={[
 								{ whitespace: true, required: true, message: 'Provide zip code!' },
-								{ min: 2, message: 'Too short!' },
-								{ max: 30, message: 'Too long!' },
+								{ pattern: zipCodeValidationRegex, message: 'Invalid zip code!' },
 							]}
 						>
 							<Input allowClear={true} placeholder='Zip code' />

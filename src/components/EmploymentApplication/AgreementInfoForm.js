@@ -124,6 +124,7 @@ export class AgreementInfoForm extends Component {
 								>
 									<DatePicker
 										allowClear={true}
+										format='MM-DD-YYYY'
 										placeholder='Select date'
 										style={{ width: '100%' }}
 									/>

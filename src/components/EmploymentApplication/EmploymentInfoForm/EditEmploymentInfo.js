@@ -4,7 +4,7 @@ import { SaveOutlined } from '@ant-design/icons'
 import { Row, Col } from 'styled-bootstrap-grid'
 
 import { states, phoneTypes, salaryTypes } from '../PersonalInfoForm'
-import { phoneValidationRegex } from '../../../utils/helpers'
+import { phoneValidationRegex, zipCodeValidationRegex } from '../../../utils/helpers'
 import { LeavingReasons, MAY_WE_CONTACT } from './AddEmploymentInfo'
 
 const { Option } = Select
@@ -100,10 +100,10 @@ export class EditEmploymentInfo extends Component {
 						<Form.Item
 							label='Zip code'
 							name='zip'
+							validateFirst={true}
 							rules={[
 								{ whitespace: true, required: true, message: 'Provide zip code!' },
-								{ min: 2, message: 'Too short!' },
-								{ max: 30, message: 'Too long!' },
+								{ pattern: zipCodeValidationRegex, message: 'Invalid zip code!' },
 							]}
 						>
 							<Input allowClear={true} placeholder='Zip code' />
@@ -166,6 +166,7 @@ export class EditEmploymentInfo extends Component {
 						>
 							<DatePicker
 								allowClear={true}
+								format='MM-DD-YYYY'
 								placeholder='Select start date'
 								style={{ width: '100%' }}
 							/>
@@ -179,6 +180,7 @@ export class EditEmploymentInfo extends Component {
 						>
 							<DatePicker
 								allowClear={true}
+								format='MM-DD-YYYY'
 								placeholder='Select end date'
 								style={{ width: '100%' }}
 							/>
