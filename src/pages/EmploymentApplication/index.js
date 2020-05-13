@@ -54,14 +54,7 @@ class EmploymentApplication extends Component {
 	renderTabBar = (props, DefaultTabBar) => (
 		<Sticky bottomOffset={80}>
 			{({ style, isSticky }) => (
-				<div
-					style={{
-						...style,
-						zIndex: 9,
-						backgroundColor: isSticky ? '#fff' : 'transparent',
-						pointerEvents: 'none',
-					}}
-				>
+				<div style={{ ...style, zIndex: 9, backgroundColor: isSticky ? '#fff' : 'transparent' }}>
 					<DefaultTabBar {...props} style={{ textAlign: 'center', backgroundColor: '#fff' }} />
 					{this.getProgress()}
 				</div>

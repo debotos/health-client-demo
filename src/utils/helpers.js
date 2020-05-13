@@ -7,7 +7,7 @@
  * @param {String} an Optional (alphanumeric), "a" (alpha), "n" (numeric)
  * @return {String}
  */
-export function randomString(len, an) {
+export function randomString(len = 15, an) {
 	an = an && an.toLowerCase()
 	var str = '',
 		i = 0,
