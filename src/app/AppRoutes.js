@@ -4,6 +4,7 @@ import { createBrowserHistory as createHistory } from 'history'
 
 import EmploymentApplication from '../pages/EmploymentApplication'
 import JobListing from '../pages/JobListing'
+import SignUp from '../pages/SignUp'
 
 export const history = createHistory()
 
@@ -13,6 +14,7 @@ function AppRoutes() {
 			<Switch>
 				<Route exact path='/' render={() => <JobListing />} />
 				<Route exact path='/apply' render={() => <EmploymentApplication />} />
+				<Route exact path='/signup' render={() => <SignUp />} />
 			</Switch>
 		</Router>
 	)

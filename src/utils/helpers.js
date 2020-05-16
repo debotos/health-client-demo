@@ -28,6 +28,9 @@ export function hasErrors(fieldsError) {
 export const phoneValidationRegex = new RegExp(/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/)
 // Ref: https://stackoverflow.com/a/160583/8465770
 export const zipCodeValidationRegex = new RegExp(/(^\d{5}$)|(^\d{5}-\d{4}$)/)
+export const passwordValidationRegex = new RegExp(
+	/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+)
 
 export const validatePhone = (mobile = '') => {
 	return phoneValidationRegex.test(mobile)
