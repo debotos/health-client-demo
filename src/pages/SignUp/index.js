@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom'
 
 import signUpBG from '../../assets/signUpBG.jpg'
 import Logo from '../../assets/logo.png'
-import { randomString, passwordValidationRegex } from '../../utils/helpers'
+import { passwordValidationRegex } from '../../utils/helpers'
 
 export class SignUp extends Component {
 	onFinish = (values) => {
 		console.log('Success:', values)
-		this.props.onAddSuccess({ key: randomString(10), ...values })
+		// TODO: Ajax req to send the data
 		this.formRef.current.resetFields()
 	}
 
@@ -26,7 +26,7 @@ export class SignUp extends Component {
 
 	render() {
 		return (
-			<Container fluid>
+			<Container fluid bg={signUpBG}>
 				<Box>
 					<Image src={Logo} alt='Care Pine Home Health' />
 					<h3 style={{ margin: '10px 0', display: 'flex' }}>Register</h3>
@@ -41,7 +41,7 @@ export class SignUp extends Component {
 							label='First Name'
 							name='firstName'
 							hasFeedback
-							validateFirst={true}
+							validateFirst
 							rules={[
 								{ whitespace: true, required: true, message: 'Provide first name!' },
 								{ min: 2, message: 'Too short!' },
@@ -55,7 +55,7 @@ export class SignUp extends Component {
 							label='Last Name'
 							name='lastName'
 							hasFeedback
-							validateFirst={true}
+							validateFirst
 							rules={[
 								{ whitespace: true, required: true, message: 'Provide last name!' },
 								{ min: 2, message: 'Too short!' },
@@ -69,6 +69,7 @@ export class SignUp extends Component {
 							label='Email Address'
 							name='email'
 							hasFeedback
+							validateFirst
 							rules={[
 								{ whitespace: true, required: true, message: 'Provide email address!' },
 								{ type: 'email', message: 'Invalid email address!' },
@@ -81,7 +82,7 @@ export class SignUp extends Component {
 							label='Password'
 							name='password'
 							hasFeedback
-							validateFirst={true}
+							validateFirst
 							rules={[
 								{ whitespace: true, required: true, message: 'Please input your Password!' },
 								{ min: 8, message: 'Password must be more than 8 characters! ' },
@@ -101,10 +102,7 @@ export class SignUp extends Component {
 							dependencies={['password']}
 							hasFeedback
 							rules={[
-								{
-									required: true,
-									message: 'Please confirm your password!',
-								},
+								{ required: true, message: 'Please confirm your password!' },
 								({ getFieldValue }) => ({
 									validator(rule, value) {
 										if (!value || getFieldValue('password') === value) {
@@ -134,18 +132,18 @@ export class SignUp extends Component {
 
 export default SignUp
 
-const Container = styled.div`
+export const Container = styled.div`
 	width: 100%;
 	height: 100%;
 	min-height: 100vh;
-	background: url(${signUpBG}) no-repeat;
+	background: ${(props) => `url(${props.bg}) no-repeat`};
 	background-size: cover;
 	background-attachment: fixed;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `
-const Box = styled.div`
+export const Box = styled.div`
 	width: 100%;
 	height: 100%;
 	max-width: 430px;
@@ -155,7 +153,7 @@ const Box = styled.div`
 	border-radius: 3px;
 	text-align: center;
 `
-const Image = styled.img`
+export const Image = styled.img`
 	max-width: 150px;
 	height: auto;
 `

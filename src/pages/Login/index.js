@@ -1,0 +1,95 @@
+import React, { Component } from 'react'
+import { Form, Input, Button, Checkbox } from 'antd'
+import { LockOutlined, MailOutlined, UserAddOutlined, LoginOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+
+import { history } from '../../app/AppRoutes'
+import signInBG from '../../assets/signInBG.jpg'
+import Logo from '../../assets/logo.png'
+import { Container, Image, Box } from '../SignUp'
+
+export class Login extends Component {
+	onFinish = (values) => {
+		console.log('Success:', values)
+		// TODO: Ajax req to send the data
+		this.formRef.current.resetFields()
+	}
+
+	onFinishFailed = (errorInfo) => {
+		console.log('Failed:', errorInfo)
+	}
+
+	constructor(props) {
+		super(props)
+		this.formRef = React.createRef()
+	}
+
+	render() {
+		return (
+			<Container fluid bg={signInBG}>
+				<Box>
+					<Image src={Logo} alt='Care Pine Home Health' />
+					<h3 style={{ margin: '10px 0' }}>Caring Nurses and Therapists to Your Home, Today!</h3>
+					<h5 style={{ margin: '10px 0' }}>Welcome Back, Please login to you account</h5>
+					<Form
+						onFinish={this.onFinish}
+						onFinishFailed={this.onFinishFailed}
+						layout='vertical'
+						ref={this.formRef}
+						labelAlign='left'
+						initialValues={{ remember: true }}
+					>
+						<Form.Item
+							label='Email Address'
+							name='email'
+							hasFeedback
+							validateFirst
+							rules={[
+								{ whitespace: true, required: true, message: 'Provide email address!' },
+								{ type: 'email', message: 'Invalid email address!' },
+							]}
+						>
+							<Input prefix={<MailOutlined />} allowClear placeholder='Email address' />
+						</Form.Item>
+
+						<Form.Item
+							label='Password'
+							name='password'
+							hasFeedback
+							validateFirst
+							rules={[{ whitespace: true, required: true, message: 'Please input your Password!' }]}
+						>
+							<Input.Password prefix={<LockOutlined />} placeholder='Password' allowClear />
+						</Form.Item>
+
+						<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+							<Form.Item name='remember' valuePropName='checked'>
+								<Checkbox>Remember me</Checkbox>
+							</Form.Item>
+
+							<Link to='/forget-password'>Forget Password</Link>
+						</div>
+
+						<div
+							style={{ margin: '20px 0 10px 0', display: 'flex', justifyContent: 'space-between' }}
+						>
+							<Button icon={<LoginOutlined />} type='primary' htmlType='submit'>
+								Sign In
+							</Button>
+							<Button
+								icon={<UserAddOutlined />}
+								type='dashed'
+								htmlType='button'
+								onClick={() => history.push('/signup')}
+							>
+								Sign Up
+							</Button>
+						</div>
+					</Form>
+				</Box>
+			</Container>
+		)
+	}
+}
+
+export default Login
