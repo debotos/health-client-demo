@@ -8,6 +8,7 @@ import { FaSearch, FaAngleRight } from 'react-icons/fa'
 
 import Header from '../../components/common/Header'
 import { randomString } from '../../utils/helpers'
+import Footer from '../../components/common/Footer'
 
 const features = [
 	'Visualizing creative ideas with clients.',
@@ -69,14 +70,19 @@ export class JobListing extends Component {
 					<Segment raised>
 						<h2>Find A Job</h2>
 						<Row>
-							<Col md='5' style={{ marginBottom: 10 }}>
+							<Col lg='5' style={{ marginBottom: 10 }}>
 								<Input placeholder='Skills, Designations, Companies' prefix={<SearchOutlined />} />
 							</Col>
-							<Col md='5' style={{ marginBottom: 10 }}>
+							<Col lg='5' style={{ marginBottom: 10 }}>
 								<Input placeholder='Enter Locations…' prefix={<EnvironmentFilled />} />
 							</Col>
-							<Col md='2' style={{ marginBottom: 10 }}>
-								<Button icon={<SearchOutlined />} type='primary' htmlType='button'>
+							<Col lg='2' style={{ marginBottom: 10, width: '100%' }}>
+								<Button
+									icon={<SearchOutlined />}
+									type='primary'
+									htmlType='button'
+									style={{ width: '100%' }}
+								>
 									Search
 								</Button>
 							</Col>
@@ -151,6 +157,7 @@ export class JobListing extends Component {
 						})}
 					</Tabs>
 				</Container>
+				<Footer />
 			</>
 		)
 	}

@@ -70,9 +70,7 @@ export class Login extends Component {
 							<Link to='/forget-password'>Forget Password</Link>
 						</div>
 
-						<div
-							style={{ margin: '20px 0 10px 0', display: 'flex', justifyContent: 'space-between' }}
-						>
+						<div style={{ margin: '5px 0', display: 'flex', justifyContent: 'space-between' }}>
 							<Button icon={<LoginOutlined />} type='primary' htmlType='submit'>
 								Sign In
 							</Button>
