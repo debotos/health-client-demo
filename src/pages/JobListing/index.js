@@ -66,7 +66,7 @@ export class JobListing extends Component {
 			<>
 				<Header sticky={true} />
 
-				<Container style={{ marginTop: 20, marginBottom: 30 }}>
+				<Container style={{ marginTop: 20, marginBottom: 30, minHeight: '95vh' }}>
 					<Segment raised>
 						<h2>Find A Job</h2>
 						<Row>
