@@ -9,6 +9,7 @@ import { FaSearch, FaAngleRight } from 'react-icons/fa'
 import Header from '../../components/common/Header'
 import { randomString } from '../../utils/helpers'
 import Footer from '../../components/common/Footer'
+import { history } from '../../app/AppRoutes'
 
 const features = [
 	'Visualizing creative ideas with clients.',
@@ -143,7 +144,10 @@ export class JobListing extends Component {
 															icon={<CheckCircleOutlined />}
 															type='primary'
 															htmlType='button'
-															onClick={() => {}}
+															onClick={() => {
+																localStorage.setItem('JOB_APPLYING', JSON.stringify(job))
+																history.push('/apply')
+															}}
 														>
 															Apply
 														</Button>

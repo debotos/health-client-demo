@@ -2,17 +2,22 @@ import React, { Component } from 'react'
 import { Form, Input, Button, Checkbox } from 'antd'
 import { LockOutlined, MailOutlined, UserAddOutlined, LoginOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import { history } from '../../app/AppRoutes'
 import signInBG from '../../assets/signInBG.jpg'
 import Logo from '../../assets/logo.png'
 import { Container, Image, Box } from '../SignUp'
+import { setCurrentUser } from '../../redux/actions/authActions'
 
 export class Login extends Component {
 	onFinish = (values) => {
 		console.log('Success:', values)
-		// TODO: Ajax req to send the data
+		// TODO: Ajax req to send the data | pass res to redux
 		this.formRef.current.resetFields()
+		/* Save to Redux for app use*/
+		/* Also it will instantly redirect the user to Dashboard page */
+		this.props.setUser(values)
 	}
 
 	onFinishFailed = (errorInfo) => {
@@ -90,4 +95,8 @@ export class Login extends Component {
 	}
 }
 
-export default Login
+const mapDispatchToProps = (dispatch) => ({
+	setUser: (user) => dispatch(setCurrentUser(user)),
+})
+
+export default connect(null, mapDispatchToProps)(Login)
