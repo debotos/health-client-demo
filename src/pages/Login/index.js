@@ -15,6 +15,7 @@ export class Login extends Component {
 		console.log('Success:', values)
 		// TODO: Ajax req to send the data | pass res to redux
 		this.formRef.current.resetFields()
+		localStorage.setItem('USER', JSON.stringify(values))
 		/* Save to Redux for app use*/
 		/* Also it will instantly redirect the user to Dashboard page */
 		this.props.setUser(values)
