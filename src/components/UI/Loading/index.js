@@ -22,7 +22,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'
@@ -40,7 +40,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'
@@ -58,7 +58,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'
@@ -76,7 +76,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'
@@ -94,7 +94,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'
@@ -112,7 +112,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'
@@ -130,7 +130,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'
@@ -148,7 +148,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'
@@ -166,7 +166,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'
@@ -184,7 +184,7 @@ export default function Loading({ color, msg, msgColor }) {
 					></animate>
 					<animate
 						attributeName='fill'
-						values='#ffffff;#ffffff;#6459f5;#ffffff;#ffffff'
+						values='#ffffff;#ffffff;#379503;#ffffff;#ffffff'
 						repeatCount='indefinite'
 						times='0;0.1;0.2;0.3;1'
 						dur='1.25s'

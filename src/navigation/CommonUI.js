@@ -77,7 +77,7 @@ export const NavArea = styled.div`
 				color: #47525d;
 				text-decoration: none;
 				font-size: 16px;
-				font-weight: bold;
+				font-weight: 600;
 				width: 100%;
 				display: inline-block;
 				padding: 10px 0;
@@ -95,7 +95,7 @@ export const NavArea = styled.div`
 				}
 			}
 			a.active {
-				background-color: #6459f5;
+				background-color: #379503;
 				color: #fff;
 				box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 1px 0 1px rgba(255, 255, 255, 0.1),
 					inset 0 1px 1px rgba(255, 255, 255, 0.1);

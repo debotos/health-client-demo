@@ -1,5 +1,5 @@
 .side-drawer {
-	font-family: 'Lato', sans-serif !important;
+	font-family: 'Open Sans', sans-serif !important;
 	height: 100%;
 	background: #eaeaea;
 	box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.2);
@@ -7,7 +7,7 @@
 	top: 0;
 	left: 0;
 	width: 70%;
-	max-width: 320px;
+	max-width: 230px;
 	z-index: 200;
 	transform: translateX(-100%);
 	transition: transform 0.3s ease-out;

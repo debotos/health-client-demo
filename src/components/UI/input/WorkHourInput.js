@@ -115,7 +115,7 @@ const DesktopClickableTd = styled(Td)`
 	cursor: pointer;
 	min-width: 75px;
 	text-align: center;
-	background-color: ${(props) => (props.checked ? '#9185ff7d' : '#fff')};
+	background-color: ${(props) => (props.checked ? '#677b8c' : '#fff')};
 	border-bottom: ${(props) => props.checked && 'none !important'};
 	border-top: ${(props) => props.checked && 'none !important'};
 `
@@ -229,7 +229,7 @@ const MobileClickableTd = styled.td`
 	cursor: pointer;
 	text-align: center;
 	width: 25%;
-	background-color: ${(props) => (props.checked ? '#9185ff7d' : '#fff')};
+	background-color: ${(props) => (props.checked ? '#677b8c' : '#fff')};
 	border-bottom: ${(props) => props.checked && 'none !important'};
 	border-top: ${(props) => props.checked && 'none !important'};
 `

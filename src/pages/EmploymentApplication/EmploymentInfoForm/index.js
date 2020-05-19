@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Container, Row, Col } from 'styled-bootstrap-grid'
-import { Label, Segment } from 'semantic-ui-react'
+import { Row, Col } from 'styled-bootstrap-grid'
+import { Segment } from 'semantic-ui-react'
 import { Button, Modal, message, Upload } from 'antd'
 import {
 	PlusOutlined,
@@ -57,11 +57,9 @@ export class EmploymentInfoForm extends Component {
 
 	render() {
 		return (
-			<Container>
-				<Segment raised>
-					<Label as='a' color='teal' ribbon>
-						Employment History
-					</Label>
+			<>
+				<Segment>
+					<h3 className='title'>Employment History</h3>
 					<Upload.Dragger
 						name='resume'
 						accept='.jpg, .jpeg, .png, .doc, .docx, .pdf'
@@ -197,7 +195,7 @@ export class EmploymentInfoForm extends Component {
 						</Button>
 					</Col>
 				</Row>
-			</Container>
+			</>
 		)
 	}
 }

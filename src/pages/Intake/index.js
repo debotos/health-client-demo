@@ -15,6 +15,7 @@ import Referral from './Referral'
 import PayorSource from './PayorSource'
 import Demographics from './Demographics'
 import Clinical from './Clinical'
+import Footer from '../../components/common/Footer'
 
 const { TabPane } = Tabs
 const tabs = [
@@ -138,7 +139,7 @@ class EmploymentApplication extends Component {
 
 							return (
 								<TabPane tab={TabHead} key={id}>
-									<div style={{ paddingBottom: '25px' }}>
+									<Container style={{ paddingBottom: '25px', minHeight: '95vh' }}>
 										<ApplicationForm
 											tabs={tabs}
 											id={id}
@@ -149,12 +150,13 @@ class EmploymentApplication extends Component {
 											formValues={formValues}
 											onSuccessfulSubmit={this.handleSuccessfulSubmit}
 										/>
-									</div>
+									</Container>
 								</TabPane>
 							)
 						})}
 					</Tabs>
 				</StickyContainer>
+				<Footer />
 			</>
 		)
 	}

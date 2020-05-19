@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { StickyContainer, Sticky } from 'react-sticky'
 import { Progress } from 'semantic-ui-react'
-import { Tabs } from 'antd'
+import { Tabs, message } from 'antd'
 import { clone } from 'ramda'
 import { Container } from 'styled-bootstrap-grid'
 import { FaRegUser, FaLandmark, FaUserTie, FaRegFileAlt, FaRegHandshake } from 'react-icons/fa'
@@ -15,6 +15,8 @@ import EducationInfoForm from './EducationInfoForm'
 import EmploymentInfoForm from './EmploymentInfoForm'
 import PersonalInfoForm from './PersonalInfoForm'
 import ReferencesInfoForm from './ReferencesInfoForm'
+import { history } from '../../app/AppRoutes'
+import Footer from '../../components/common/Footer'
 
 const { TabPane } = Tabs
 const tabs = [
@@ -51,6 +53,25 @@ const tabs = [
 ]
 
 class EmploymentApplication extends Component {
+	componentDidMount() {
+		const jobError = (msg = 'Something went wrong. Please try again!') => {
+			message.error(msg)
+			history.replace('/jobs')
+		}
+		try {
+			const jobData = localStorage.getItem('JOB_APPLYING')
+			if (!jobData) {
+				jobError('No job selected. Please select a job!')
+				return
+			}
+			const jobApplying = JSON.parse(jobData)
+			this.setState({ jobApplying })
+		} catch (error) {
+			console.log(`Unable to parse 'JOB_APPLYING' data.`, error)
+			jobError()
+		}
+	}
+
 	renderTabBar = (props, DefaultTabBar) => (
 		<Sticky bottomOffset={80}>
 			{({ style, isSticky }) => (
@@ -104,12 +125,13 @@ class EmploymentApplication extends Component {
 		this.state = {
 			current: tabs[0].id,
 			formValues: {},
+			jobApplying: {},
 			percent: 0,
 		}
 	}
 
 	render() {
-		const { current, formValues } = this.state
+		const { current, jobApplying, formValues } = this.state
 
 		return (
 			<>
@@ -138,7 +160,7 @@ class EmploymentApplication extends Component {
 
 							return (
 								<TabPane tab={TabHead} key={id}>
-									<div style={{ paddingBottom: '25px' }}>
+									<Container style={{ paddingBottom: '25px', minHeight: '95vh' }}>
 										<ApplicationForm
 											tabs={tabs}
 											id={id}
@@ -148,13 +170,15 @@ class EmploymentApplication extends Component {
 											goToPrevTab={(values) => prevTabId && this.goToTab(prevTabId, values, false)}
 											formValues={formValues}
 											onSuccessfulSubmit={this.handleSuccessfulSubmit}
+											jobApplying={jobApplying}
 										/>
-									</div>
+									</Container>
 								</TabPane>
 							)
 						})}
 					</Tabs>
 				</StickyContainer>
+				<Footer />
 			</>
 		)
 	}

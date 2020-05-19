@@ -6,8 +6,8 @@ module.exports = {
 				lessLoaderOptions: {
 					/* antd style override */
 					/* Ref: https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less */ modifyVars: {
-						'@primary-color': '#6459f5',
-						'@font-family': "'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif",
+						'@primary-color': '#379503',
+						'@font-family': "'Open Sans', sans-serif",
 					},
 					javascriptEnabled: true,
 				},

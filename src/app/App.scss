@@ -1,6 +1,24 @@
 /* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+
 body {
 	background-color: #edf2f7;
+	font-family: 'Open Sans', sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Vollkorn', serif !important;
+	font-weight: 600 !important;
+}
+th {
+	font-family: 'Vollkorn', serif !important;
+	font-weight: 600 !important;
 }
 
 .hide-native-scrollbar {
@@ -23,6 +41,21 @@ body {
 	}
 }
 
+.title {
+	font-size: 20px;
+	margin: 10px 0;
+	position: relative;
+}
+.title:before {
+	content: '';
+	background: #28a745;
+	width: 25px;
+	height: 3px;
+	display: inline-block;
+	position: absolute;
+	bottom: -3px;
+}
+
 /* antd style override */
 .ant-row.ant-form-item {
 	flex-direction: column; /* Label & Input field align vertically */
@@ -39,7 +72,7 @@ body {
 .ant-table {
 	display: block;
 
-	@media screen and (max-width: 600px) {
+	@media screen and (max-width: 767px) {
 		&-thead {
 			display: none;
 		}
@@ -122,4 +155,9 @@ body {
 .ant-upload-text {
 	padding-left: 10px;
 	padding-right: 10px;
+}
+
+.ant-tabs-content > .ant-tabs-tabpane-inactive {
+	margin: 0 !important;
+	display: none;
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Container, Row, Col } from 'styled-bootstrap-grid'
-import { Label, Segment } from 'semantic-ui-react'
+import { Row, Col } from 'styled-bootstrap-grid'
+import { Segment } from 'semantic-ui-react'
 import { Button, Modal, message } from 'antd'
 import {
 	PlusOutlined,
@@ -48,11 +48,9 @@ export class ReferenceInfoForm extends Component {
 
 	render() {
 		return (
-			<Container>
-				<Segment raised>
-					<Label as='a' color='teal' ribbon>
-						References(Do not list relatives)
-					</Label>
+			<>
+				<Segment>
+					<h3 className='title'>References(Do not list relatives)</h3>
 					<div style={{ margin: '10px 0', display: 'flex', justifyContent: 'center' }}>
 						<Button
 							icon={<PlusOutlined />}
@@ -164,7 +162,7 @@ export class ReferenceInfoForm extends Component {
 						</Button>
 					</Col>
 				</Row>
-			</Container>
+			</>
 		)
 	}
 }

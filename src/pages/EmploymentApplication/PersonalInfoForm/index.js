@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { clone } from 'ramda'
-import { Label, Segment } from 'semantic-ui-react'
+import { Segment, Label } from 'semantic-ui-react'
 import {
 	Form,
 	Select,
@@ -15,7 +15,7 @@ import {
 	Radio,
 	message,
 } from 'antd'
-import { Container, Row, Col } from 'styled-bootstrap-grid'
+import { Row, Col } from 'styled-bootstrap-grid'
 import {
 	PlusOutlined,
 	LeftCircleOutlined,
@@ -28,6 +28,7 @@ import EmergencyContactTable from './EmergencyContact/EmergencyContactTable'
 import EmergencyContactAdd from './EmergencyContact/EmergencyContactAdd'
 import EmergencyContactEdit from './EmergencyContact/EmergencyContactEdit'
 import WorkHourInput, { initialWorkingHourData } from '../../../components/UI/input/WorkHourInput'
+import { JobDetailsHighlight } from '../../JobListing'
 
 const CheckboxGroup = Checkbox.Group
 const { Option } = Select
@@ -172,9 +173,16 @@ export class PersonalInfoForm extends Component {
 			...formInitialValues,
 		}
 	}
+
 	render() {
+		const { jobApplying } = this.props
 		return (
-			<Container>
+			<>
+				{/* Job info */}
+				<Segment>
+					<Label attached='top'>Job You're Applying</Label>
+					<JobDetailsHighlight data={jobApplying} />
+				</Segment>
 				<Form
 					onFinish={this.onFinish}
 					onFinishFailed={this.onFinishFailed}
@@ -183,10 +191,8 @@ export class PersonalInfoForm extends Component {
 					initialValues={formInitialValues}
 				>
 					{/* Personal */}
-					<Segment raised>
-						<Label as='a' color='teal' ribbon>
-							Personal
-						</Label>
+					<Segment>
+						<h3 className='title'>Personal</h3>
 						{/* Name Fields */}
 						<Divider style={{ margin: '10px 0 5px 0' }}>Name</Divider>
 						<Row>
@@ -367,10 +373,8 @@ export class PersonalInfoForm extends Component {
 						</Row>
 					</Segment>
 					{/* Emergency Contact/Relationship */}
-					<Segment raised>
-						<Label as='a' color='teal' ribbon>
-							Emergency Contact/Relationship
-						</Label>
+					<Segment>
+						<h3 className='title'>Emergency Contact/Relationship</h3>
 						<div style={{ margin: '10px 0', display: 'flex', justifyContent: 'center' }}>
 							<Button
 								icon={<PlusOutlined />}
@@ -431,10 +435,8 @@ export class PersonalInfoForm extends Component {
 						</Modal>
 					</Segment>
 					{/* Classification */}
-					<Segment raised>
-						<Label as='a' color='teal' ribbon>
-							Classification
-						</Label>
+					<Segment>
+						<h3 className='title'>Classification</h3>
 						{/* Positions (Transfer Input) */}
 						<Row style={{ marginTop: '10px' }}>
 							<Col
@@ -597,9 +599,7 @@ export class PersonalInfoForm extends Component {
 							</Col>
 						</Row>
 						{/* Specify days / hours you may be available */}
-						<Label as='a' color='teal' ribbon>
-							Specify days / hours you may be available
-						</Label>
+						<h3 className='title'>Specify days / hours you may be available</h3>
 						<Row style={{ marginTop: '10px' }}>
 							<Col md='12'>
 								<WorkHourInput
@@ -609,7 +609,7 @@ export class PersonalInfoForm extends Component {
 							</Col>
 						</Row>
 						<Row style={{ marginTop: '10px' }}>
-							<Col md='3'>
+							<Col md='5'>
 								<Form.Item
 									label='Do you have a current driver’s license?'
 									name={FIELD_HAVE_CAR_LICENSE}
@@ -624,7 +624,7 @@ export class PersonalInfoForm extends Component {
 							</Col>
 							{this.state[FIELD_HAVE_CAR_LICENSE] && (
 								<>
-									<Col md='4'>
+									<Col md='3'>
 										<Form.Item
 											label='Select state'
 											name='drivingLicenseIssuedState'
@@ -648,7 +648,7 @@ export class PersonalInfoForm extends Component {
 											</Select>
 										</Form.Item>
 									</Col>
-									<Col md='5'>
+									<Col md='4'>
 										<Form.Item
 											label='License'
 											name='drivingLicense'
@@ -718,7 +718,7 @@ export class PersonalInfoForm extends Component {
 						</Col>
 					</Row>
 				</Form>
-			</Container>
+			</>
 		)
 	}
 }

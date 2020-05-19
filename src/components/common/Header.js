@@ -56,7 +56,7 @@ export class Header extends Component {
 
 						<LogoContainer>
 							<AppLogo src={Logo} alt='Care Pine Home Health' onClick={() => history.push('/')} />
-							{title && <h3 style={{ margin: '5px 0' }}>{title}</h3>}
+							{title && <h3 style={{ marginTop: '8px' }}>{title}</h3>}
 						</LogoContainer>
 
 						<div style={{ flex: 1 }} />
@@ -140,7 +140,7 @@ const SwipeableArea = styled(Swipeable)`
 const MenuButton = styled.div`
 	height: 40px;
 	width: 40px;
-	background-color: #6459f5;
+	background-color: #379503;
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;

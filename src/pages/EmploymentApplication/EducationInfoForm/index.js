@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Container, Row, Col } from 'styled-bootstrap-grid'
-import { Label, Segment } from 'semantic-ui-react'
+import { Row, Col } from 'styled-bootstrap-grid'
+import { Segment } from 'semantic-ui-react'
 import { Button, Modal, message } from 'antd'
 import {
 	PlusOutlined,
@@ -48,11 +48,9 @@ export class EducationInfoForm extends Component {
 
 	render() {
 		return (
-			<Container>
-				<Segment raised>
-					<Label as='a' color='teal' ribbon>
-						Education
-					</Label>
+			<>
+				<Segment>
+					<h3 className='title'>Education</h3>
 					<div style={{ margin: '10px 0', display: 'flex', justifyContent: 'center' }}>
 						<Button
 							icon={<PlusOutlined />}
@@ -162,7 +160,7 @@ export class EducationInfoForm extends Component {
 						</Button>
 					</Col>
 				</Row>
-			</Container>
+			</>
 		)
 	}
 }

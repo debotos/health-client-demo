@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Label, Segment } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
 import { Form, Select, Input, Divider, Button, Modal, message } from 'antd'
-import { Container, Row, Col } from 'styled-bootstrap-grid'
+import { Row, Col } from 'styled-bootstrap-grid'
 import {
 	PlusOutlined,
 	LeftCircleOutlined,
@@ -149,7 +149,7 @@ export class Demographics extends Component {
 
 	render() {
 		return (
-			<Container>
+			<>
 				<Form
 					onFinish={this.onFinish}
 					onFinishFailed={this.onFinishFailed}
@@ -157,10 +157,8 @@ export class Demographics extends Component {
 					labelAlign='left'
 				>
 					{/* Patient Demographics */}
-					<Segment raised>
-						<Label as='a' color='teal' ribbon>
-							Patient Demographics
-						</Label>
+					<Segment>
+						<h3 className='title'>Patient Demographics</h3>
 						{/* Name Fields */}
 						<Divider style={{ margin: '10px 0 5px 0' }}>Name</Divider>
 						<Row>
@@ -277,9 +275,7 @@ export class Demographics extends Component {
 					</Segment>
 					{/* Service Location */}
 					<Segment>
-						<Label as='a' color='teal' ribbon>
-							Service Location
-						</Label>
+						<h3 className='title'>Service Location</h3>
 						<div style={{ margin: '10px 0', display: 'flex', justifyContent: 'center' }}>
 							<Button
 								icon={<PlusOutlined />}
@@ -345,10 +341,8 @@ export class Demographics extends Component {
 						</Modal>
 					</Segment>
 					{/* Contact Person */}
-					<Segment raised>
-						<Label as='a' color='teal' ribbon>
-							Contact Person
-						</Label>
+					<Segment>
+						<h3 className='title'>Contact Person</h3>
 						<div style={{ margin: '10px 0', display: 'flex', justifyContent: 'center' }}>
 							<Button
 								icon={<PlusOutlined />}
@@ -459,7 +453,7 @@ export class Demographics extends Component {
 						</Col>
 					</Row>
 				</Form>
-			</Container>
+			</>
 		)
 	}
 }

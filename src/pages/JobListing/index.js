@@ -67,8 +67,8 @@ export class JobListing extends Component {
 			<>
 				<Header sticky={true} />
 
-				<Container style={{ marginTop: 20, marginBottom: 30, minHeight: '95vh' }}>
-					<Segment raised>
+				<Container style={{ marginTop: 20, minHeight: '95vh' }}>
+					<Segment>
 						<h2>Find A Job</h2>
 						<Row>
 							<Col lg='5' style={{ marginBottom: 10 }}>
@@ -98,11 +98,11 @@ export class JobListing extends Component {
 								results = jobs.filter((job) => job.category.includes(id))
 							}
 							return (
-								<Tabs.TabPane tab={<span>{title}</span>} key={id}>
+								<Tabs.TabPane tab={<span>{title}</span>} key={id} style={{ marginBottom: 30 }}>
 									{results.map((job) => {
 										const { id, logo, position, experience, location, features, remarks } = job
 										return (
-											<Segment raised key={id}>
+											<Segment key={id}>
 												<Row>
 													<Col md='4'>
 														<JobHead>
@@ -169,7 +169,51 @@ export class JobListing extends Component {
 
 export default JobListing
 
+export function JobDetailsHighlight({ data }) {
+	const { logo, position, experience, location } = data
+	return (
+		<Row>
+			<Col md='3' alignSelf='center'>
+				<div style={{ textAlign: 'center' }}>
+					{logo ? (
+						<Avatar src={logo} size={80} />
+					) : (
+						<FaSearch style={{ opacity: 0.7, fontSize: '80px' }} />
+					)}
+				</div>
+			</Col>
+			<Col md='3' alignSelf='center'>
+				<HighlightItem>
+					<p>Position</p>
+					<span>{position}</span>
+				</HighlightItem>
+			</Col>
+			<Col md='3' alignSelf='center'>
+				<HighlightItem>
+					<p>Experience</p>
+					<span>{experience}</span>
+				</HighlightItem>
+			</Col>
+			<Col md='3' alignSelf='center'>
+				<HighlightItem>
+					<p>Location</p>
+					<span>{location}</span>
+				</HighlightItem>
+			</Col>
+		</Row>
+	)
+}
+
 const JobHead = styled.div``
+const HighlightItem = styled.div`
+	margin: 5px 0;
+	p {
+		margin-bottom: 0;
+	}
+	span {
+		font-weight: bold;
+	}
+`
 const HeadItem = styled.div`
 	margin-bottom: 15px;
 	p {
