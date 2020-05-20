@@ -24,7 +24,7 @@ const CloseBtn = styled(FiXCircle)`
 export const CloseButton = ({ onClick }) => <CloseBtn onClick={() => onClick()} />
 
 /* 2 */
-export const LogoffBtn = styled(FiLogOut)`
+const LogoffBtn = styled(FiLogOut)`
 	color: #47525d;
 	opacity: 0.5;
 	font-size: 1.8rem;
@@ -39,6 +39,7 @@ export const LogoffBtn = styled(FiLogOut)`
     font-size: 1.6rem;
 	`}
 `
+export const LogoffButton = ({ onClick }) => <LogoffBtn onClick={() => onClick()} />
 
 /* 3 */
 export const NavArea = styled.div`
@@ -47,8 +48,8 @@ export const NavArea = styled.div`
 	height: 100%;
 	flex: 1;
 	flex-direction: column;
-	padding: 50px 20px 0 20px;
-	background-color: #c2d0db;
+	padding: 50px 0 0 0;
+	background-color: #f8f9fa;
 
 	/* For ScrollBar */
 	overflow-y: scroll;
@@ -74,15 +75,14 @@ export const NavArea = styled.div`
 				opacity: 1;
 			}
 			a {
+				border-left: 3px solid transparent;
 				color: #47525d;
 				text-decoration: none;
 				font-size: 16px;
 				font-weight: 600;
 				width: 100%;
 				display: inline-block;
-				padding: 10px 0;
-				border-radius: 5px;
-				padding-left: 10px;
+				padding: 10px 20px;
 				display: flex;
 				align-items: center;
 				.nav-icon {
@@ -90,15 +90,15 @@ export const NavArea = styled.div`
 					display: flex;
 					align-items: center;
 					svg {
-						font-size: 1.2rem;
+						font-size: 1.3rem;
 					}
 				}
 			}
 			a.active {
-				background-color: #379503;
-				color: #fff;
-				box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 1px 0 1px rgba(255, 255, 255, 0.1),
-					inset 0 1px 1px rgba(255, 255, 255, 0.1);
+				background-color: #fff;
+				color: #379503;
+				box-shadow: 0 5px 5px -5px #c1c1c1, 0 -5px 5px -5px #c1c1c1;
+				border-left-color: #379503;
 			}
 		}
 		li:last-child {
@@ -107,14 +107,13 @@ export const NavArea = styled.div`
 	}
 	${media.lessThan('medium')`
 		/* screen width is less than 768px (medium) */
-		padding: 45px 15px 0 15px;
+		padding: 45px 0 0 0;
 		ul li {
 			a {
 				font-size: 15px;
-				padding: 8px 0;
-				padding-left: 10px;
+				padding: 8px 20px;
 				.nav-icon {
-					margin-right: 5px;
+					margin-right: 8px;
 				}
 			}
 		}
@@ -132,5 +131,5 @@ export const ActionContainer = styled.div`
 	flex-direction: row-reverse;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 20px;
+	padding: 0 22px;
 `

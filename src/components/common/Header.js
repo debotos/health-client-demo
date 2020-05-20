@@ -6,9 +6,9 @@ import { Transition } from 'semantic-ui-react'
 
 import DrawerNavigation from '../../navigation'
 import Backdrop from '../../navigation/Backdrop'
-import Loader from '../UI/Loading/Overlay'
 import { history } from '../../app/AppRoutes'
 import Logo from '../../assets/logo.png'
+import { MobileOrTablet } from '../common/Device'
 
 export class Header extends Component {
 	componentDidMount() {
@@ -19,9 +19,7 @@ export class Header extends Component {
 		this._isMounted = false
 	}
 
-	state = { sideDrawerOpen: false, loading: false }
-
-	setLoading = (loading) => this._isMounted && this.setState({ loading })
+	state = { sideDrawerOpen: false }
 
 	/* Drawer Handler */
 	drawerToggleHandler = () => {
@@ -36,7 +34,7 @@ export class Header extends Component {
 	}
 
 	render() {
-		const { sideDrawerOpen, loading } = this.state
+		const { sideDrawerOpen } = this.state
 		const { title, sticky = false, bgColor } = this.props
 
 		return (
@@ -48,41 +46,45 @@ export class Header extends Component {
 			<>
 				<header style={{ display: 'initial' }}>
 					<Container sticky={sticky} bgcolor={bgColor}>
-						<div style={{ flex: 1 }}>
-							<MenuButton onClick={this.drawerToggleHandler}>
-								<MenuIcon />
-							</MenuButton>
-						</div>
+						<MobileOrTablet>
+							<div style={{ flex: 1 }}>
+								<MenuButton onClick={this.drawerToggleHandler}>
+									<MenuIcon />
+								</MenuButton>
+							</div>
+						</MobileOrTablet>
 
 						<LogoContainer>
 							<AppLogo src={Logo} alt='Care Pine Home Health' onClick={() => history.push('/')} />
-							{title && <h3 style={{ marginTop: '8px' }}>{title}</h3>}
+							{title && <h3 style={{ marginTop: '8px', textAlign: 'center' }}>{title}</h3>}
 						</LogoContainer>
 
-						<div style={{ flex: 1 }} />
+						<MobileOrTablet>
+							<div style={{ flex: 1 }} />
+						</MobileOrTablet>
 					</Container>
 				</header>
-				{/* Swipeable area */}
-				{!sideDrawerOpen && (
-					<SwipeableArea
-						onSwipedRight={() => this._isMounted && this.setState({ sideDrawerOpen: true })}
-						trackMouse
+				<MobileOrTablet>
+					{/* Swipeable area */}
+					{!sideDrawerOpen && (
+						<SwipeableArea
+							onSwipedRight={() => this._isMounted && this.setState({ sideDrawerOpen: true })}
+							trackMouse
+						/>
+					)}
+					{/* Side Drawer Navigation Portion */}
+					<DrawerNavigation
+						show={sideDrawerOpen}
+						closeDrawer={this.drawerToggleHandler}
+						setLoading={this.setLoading}
 					/>
-				)}
-				{/* Side Drawer Navigation Portion */}
-				<DrawerNavigation
-					show={sideDrawerOpen}
-					closeDrawer={this.drawerToggleHandler}
-					setLoading={this.setLoading}
-				/>
-				{/* Side Drawer Navigation Backdrop */}
-				{sideDrawerOpen && (
-					<Transition visible={sideDrawerOpen} animation='fade'>
-						<Backdrop click={this.backdropClickHandler} />
-					</Transition>
-				)}
-				{/* Logging off loading */}
-				{loading && <Loader msg='Logging off...' msgColor='#fff' />}
+					{/* Side Drawer Navigation Backdrop */}
+					{sideDrawerOpen && (
+						<Transition visible={sideDrawerOpen} animation='fade'>
+							<Backdrop click={this.backdropClickHandler} />
+						</Transition>
+					)}
+				</MobileOrTablet>
 			</>
 		)
 	}

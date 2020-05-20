@@ -29,6 +29,8 @@ import EmergencyContactAdd from './EmergencyContact/EmergencyContactAdd'
 import EmergencyContactEdit from './EmergencyContact/EmergencyContactEdit'
 import WorkHourInput, { initialWorkingHourData } from '../../../components/UI/input/WorkHourInput'
 import { JobDetailsHighlight } from '../../JobListing'
+import { history } from '../../../app/AppRoutes'
+import Btn from '../../../components/UI/Button'
 
 const CheckboxGroup = Checkbox.Group
 const { Option } = Select
@@ -180,7 +182,15 @@ export class PersonalInfoForm extends Component {
 			<>
 				{/* Job info */}
 				<Segment>
-					<Label attached='top'>Job You're Applying</Label>
+					<Label attached='top' style={{ display: 'flex', justifyContent: 'space-between' }}>
+						<span>Job You're Applying</span>
+						<span
+							style={{ cursor: 'pointer', color: '#379503' }}
+							onClick={() => history.replace('/jobs')}
+						>
+							<LeftCircleOutlined /> Select Another
+						</span>
+					</Label>
 					<JobDetailsHighlight data={jobApplying} />
 				</Segment>
 				<Form
@@ -672,49 +682,45 @@ export class PersonalInfoForm extends Component {
 					</Segment>
 					<Row style={{ marginTop: 20 }}>
 						<Col md='4' style={{ marginBottom: 10, display: 'flex', justifyContent: 'center' }}>
-							<Button
+							<Btn
 								icon={<LeftCircleOutlined />}
-								type='primary'
 								htmlType='button'
 								disabled={this.state.formProcessing || !this.props.prevTabId}
 								onClick={() => this.props.goToPrevTab()}
 							>
 								Previous
-							</Button>
+							</Btn>
 						</Col>
 
 						<Col md='4' style={{ marginBottom: 10, display: 'flex', justifyContent: 'center' }}>
-							<Button
+							<Btn
 								icon={<CloseCircleOutlined />}
-								type='primary'
 								htmlType='button'
 								style={{ marginRight: 10 }}
 								disabled={this.state.formProcessing}
 								onClick={this.handleClearAll}
 							>
 								Clear All
-							</Button>
-							<Button
+							</Btn>
+							<Btn
 								icon={<SaveOutlined />}
-								type='primary'
 								htmlType='button'
 								disabled={this.state.formProcessing}
 								onClick={() => this.startProcessing(false)} // 'false' for not to leave
 							>
 								Save for Later
-							</Button>
+							</Btn>
 						</Col>
 
 						<Col md='4' style={{ display: 'flex', justifyContent: 'center' }}>
-							<Button
+							<Btn
 								icon={<SaveOutlined />}
-								type='primary'
 								htmlType='button'
 								disabled={this.state.formProcessing}
 								onClick={() => this.startProcessing(true)} // 'true' for continue next
 							>
 								Save and Continue
-							</Button>
+							</Btn>
 						</Col>
 					</Row>
 				</Form>

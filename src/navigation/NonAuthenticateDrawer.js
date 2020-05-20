@@ -4,7 +4,7 @@ import { MdWork, MdLock, MdPersonAdd } from 'react-icons/md'
 
 import { CloseButton, NavArea, ActionContainer } from './CommonUI'
 
-function NonAuthenticateDrawer({ closeDrawer }) {
+function NonAuthenticateDrawer({ closeDrawer, desktop }) {
 	return (
 		<NavArea>
 			<ActionContainer>

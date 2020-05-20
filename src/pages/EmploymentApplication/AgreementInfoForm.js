@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'styled-bootstrap-grid'
 import { Label, Segment } from 'semantic-ui-react'
-import { Button, Checkbox, Form, Input, DatePicker, Modal } from 'antd'
+import { Checkbox, Form, Input, DatePicker, Modal } from 'antd'
 import moment from 'moment'
 import { StepForwardOutlined } from '@ant-design/icons'
 import { clone } from 'ramda'
+import Btn from '../../components/UI/Button'
 
 export class AgreementInfoForm extends Component {
 	onFinish = (values) => {
@@ -148,14 +149,9 @@ export class AgreementInfoForm extends Component {
 						</Col>
 					</Row>
 					<div style={{ display: 'flex', justifyContent: 'center', margin: '15px 0' }}>
-						<Button
-							icon={<StepForwardOutlined />}
-							type='primary'
-							htmlType='submit'
-							disabled={!accepted}
-						>
+						<Btn icon={<StepForwardOutlined />} htmlType='submit' disabled={!accepted}>
 							Submit
-						</Button>
+						</Btn>
 					</div>
 				</Form>
 			</Segment>

@@ -12,6 +12,7 @@ import {
 import AddReferenceInfo from './AddReferenceInfo'
 import EditReferenceInfo from './EditReferenceInfo'
 import ReferenceInfoTable from './ReferenceInfoTable'
+import Btn from '../../../components/UI/Button'
 
 export class ReferenceInfoForm extends Component {
 	componentWillUnmount() {
@@ -117,49 +118,45 @@ export class ReferenceInfoForm extends Component {
 
 				<Row style={{ marginTop: 20 }}>
 					<Col md='4' style={{ marginBottom: 10, display: 'flex', justifyContent: 'center' }}>
-						<Button
+						<Btn
 							icon={<LeftCircleOutlined />}
-							type='primary'
 							htmlType='button'
 							disabled={!this.props.prevTabId}
 							onClick={() => this.props.goToPrevTab()}
 						>
 							Previous
-						</Button>
+						</Btn>
 					</Col>
 
 					<Col md='4' style={{ marginBottom: 10, display: 'flex', justifyContent: 'center' }}>
-						<Button
+						<Btn
 							icon={<CloseCircleOutlined />}
-							type='primary'
 							htmlType='button'
 							style={{ marginRight: 10 }}
 							disabled={this.state.references.length === 0}
 							onClick={() => this.setState({ references: [] })}
 						>
 							Clear All
-						</Button>
-						<Button
+						</Btn>
+						<Btn
 							icon={<SaveOutlined />}
-							type='primary'
 							htmlType='button'
 							// disabled={this.state.references.length === 0}
 							onClick={() => this.startProcessing(false)} // 'false' for not to leave
 						>
 							Save for Later
-						</Button>
+						</Btn>
 					</Col>
 
 					<Col md='4' style={{ display: 'flex', justifyContent: 'center' }}>
-						<Button
+						<Btn
 							icon={<SaveOutlined />}
-							type='primary'
 							htmlType='button'
 							// disabled={this.state.references.length === 0}
 							onClick={() => this.startProcessing(true)} // 'true' for continue next
 						>
 							Save and Continue
-						</Button>
+						</Btn>
 					</Col>
 				</Row>
 			</>

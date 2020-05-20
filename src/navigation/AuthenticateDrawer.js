@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { MdHome, MdWork } from 'react-icons/md'
 import { FiFileText } from 'react-icons/fi'
+import { message, Tooltip } from 'antd'
 import {
 	FaClinicMedical,
 	FaProjectDiagram,
@@ -15,25 +16,30 @@ import {
 	FaUserCog,
 } from 'react-icons/fa'
 
-import { CloseButton, LogoffBtn, NavArea, ActionContainer } from './CommonUI'
+import { CloseButton, LogoffButton, NavArea, ActionContainer } from './CommonUI'
 import { setCurrentUser } from '../redux/actions/authActions'
 
-function AuthenticateDrawer({ closeDrawer, setUser, auth, setLoading }) {
+function AuthenticateDrawer({ closeDrawer, setUser, auth, desktop }) {
 	const handleLogoff = () => {
-		setLoading(true)
+		const hide = message.loading('Logging off...', 0)
 		/* Remove from server side via ajax call */
 		// When ajax finished then do the followings -
 		/* Remove data from local storage */
+		localStorage.removeItem('USER')
 		/* Remove from Redux, It will kick the user to Login page */
 		setUser({}) // Empty User
-		setLoading(false)
+		setTimeout(() => hide(), 2000)
 	}
 
 	return (
 		<NavArea>
 			<ActionContainer>
-				<CloseButton onClick={closeDrawer} />
-				<LogoffBtn onClick={handleLogoff} />
+				{desktop ? <div /> : <CloseButton onClick={closeDrawer} />}
+				<Tooltip placement='right' title='Logout'>
+					<div>
+						<LogoffButton onClick={handleLogoff} />
+					</div>
+				</Tooltip>
 			</ActionContainer>
 			<ul>
 				{NavRoutes.map((link, index) => (

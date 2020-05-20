@@ -16,6 +16,7 @@ import PayorSource from './PayorSource'
 import Demographics from './Demographics'
 import Clinical from './Clinical'
 import Footer from '../../components/common/Footer'
+import DrawerNavigation from '../../navigation'
 
 const { TabPane } = Tabs
 const tabs = [
@@ -115,47 +116,52 @@ class EmploymentApplication extends Component {
 		return (
 			<>
 				<Header title='Patient Details' />
+				<div style={{ display: 'flex' }}>
+					<DrawerNavigation />
 
-				<StickyContainer>
-					<Tabs
-						tabPosition={'top'}
-						renderTabBar={this.renderTabBar}
-						animated={false}
-						activeKey={current}
-						onChange={this.onTabChange}
-					>
-						{tabs.map((tab, index) => {
-							const totalTabs = tabs.length
-							const currentTabPosition = index + 1
-							const nextTabId = currentTabPosition < totalTabs ? tabs[index + 1].id : null
-							const prevTabId = currentTabPosition !== 1 ? tabs[index - 1].id : null
-							const { id, title, icon, component: ApplicationForm } = tab
-							const TabHead = (
-								<TabHeadItem>
-									<span>{icon}</span>
-									<span>{title}</span>
-								</TabHeadItem>
-							)
+					<StickyContainer style={{ width: '100%' }}>
+						<Tabs
+							tabPosition={'top'}
+							renderTabBar={this.renderTabBar}
+							animated={false}
+							activeKey={current}
+							onChange={this.onTabChange}
+						>
+							{tabs.map((tab, index) => {
+								const totalTabs = tabs.length
+								const currentTabPosition = index + 1
+								const nextTabId = currentTabPosition < totalTabs ? tabs[index + 1].id : null
+								const prevTabId = currentTabPosition !== 1 ? tabs[index - 1].id : null
+								const { id, title, icon, component: ApplicationForm } = tab
+								const TabHead = (
+									<TabHeadItem>
+										<span>{icon}</span>
+										<span>{title}</span>
+									</TabHeadItem>
+								)
 
-							return (
-								<TabPane tab={TabHead} key={id}>
-									<Container style={{ paddingBottom: '25px', minHeight: '95vh' }}>
-										<ApplicationForm
-											tabs={tabs}
-											id={id}
-											nextTabId={nextTabId}
-											prevTabId={prevTabId}
-											goToNextTab={(values) => nextTabId && this.goToTab(nextTabId, values, true)}
-											goToPrevTab={(values) => prevTabId && this.goToTab(prevTabId, values, false)}
-											formValues={formValues}
-											onSuccessfulSubmit={this.handleSuccessfulSubmit}
-										/>
-									</Container>
-								</TabPane>
-							)
-						})}
-					</Tabs>
-				</StickyContainer>
+								return (
+									<TabPane tab={TabHead} key={id}>
+										<Container style={{ paddingBottom: '25px', minHeight: '95vh' }}>
+											<ApplicationForm
+												tabs={tabs}
+												id={id}
+												nextTabId={nextTabId}
+												prevTabId={prevTabId}
+												goToNextTab={(values) => nextTabId && this.goToTab(nextTabId, values, true)}
+												goToPrevTab={(values) =>
+													prevTabId && this.goToTab(prevTabId, values, false)
+												}
+												formValues={formValues}
+												onSuccessfulSubmit={this.handleSuccessfulSubmit}
+											/>
+										</Container>
+									</TabPane>
+								)
+							})}
+						</Tabs>
+					</StickyContainer>
+				</div>
 				<Footer />
 			</>
 		)

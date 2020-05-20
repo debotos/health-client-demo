@@ -2,11 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
+import { Desktop, MobileOrTablet } from '../components/common/Device'
 import NonAuthenticateDrawer from './NonAuthenticateDrawer'
 import AuthenticateDrawer from './AuthenticateDrawer'
 import './drawer-navigation.css'
 
-const Container = styled.div`
+const MobileDrawerContainer = styled.div`
 	display: flex;
 	flex: 1;
 	flex-direction: column;
@@ -23,6 +24,7 @@ const Container = styled.div`
 		height: 0;
 	}
 `
+const DesktopDrawerContainer = styled(MobileDrawerContainer)``
 
 class sideDrawer extends React.Component {
 	render() {
@@ -36,15 +38,35 @@ class sideDrawer extends React.Component {
 		const { isAuthenticated, user } = auth
 
 		return (
-			<div className={drawerClasses}>
-				<Container>
-					{isAuthenticated ? (
-						<AuthenticateDrawer user={user} closeDrawer={closeDrawer} setLoading={setLoading} />
-					) : (
-						<NonAuthenticateDrawer closeDrawer={closeDrawer} />
-					)}
-				</Container>
-			</div>
+			<>
+				<MobileOrTablet>
+					<div className={drawerClasses}>
+						<MobileDrawerContainer>
+							{isAuthenticated ? (
+								<AuthenticateDrawer
+									user={user}
+									closeDrawer={closeDrawer}
+									setLoading={setLoading}
+									desktop={false}
+								/>
+							) : (
+								<NonAuthenticateDrawer closeDrawer={closeDrawer} desktop={false} />
+							)}
+						</MobileDrawerContainer>
+					</div>
+				</MobileOrTablet>
+				<Desktop>
+					<div className='side-drawer-desktop'>
+						<DesktopDrawerContainer>
+							{isAuthenticated ? (
+								<AuthenticateDrawer user={user} setLoading={setLoading} desktop={true} />
+							) : (
+								<NonAuthenticateDrawer desktop={true} />
+							)}
+						</DesktopDrawerContainer>
+					</div>
+				</Desktop>
+			</>
 		)
 	}
 }
