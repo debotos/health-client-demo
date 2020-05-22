@@ -61,7 +61,7 @@ th {
 
 .ant-modal {
 	@media (max-width: 767px) {
-		top: 0;
+		// top: 0;
 	}
 }
 .ant-row.ant-form-item {
@@ -78,6 +78,11 @@ th {
 }
 .ant-table-tbody .ant-table-wrapper:only-child .ant-table {
 	margin: -8px -8px -8px !important;
+}
+.ant-table-cell.ant-table-row-expand-icon-cell {
+	@media screen and (max-width: 991px) {
+		display: flex !important;
+	}
 }
 .ant-table {
 	display: block;

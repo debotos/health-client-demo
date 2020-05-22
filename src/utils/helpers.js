@@ -26,6 +26,7 @@ export function hasErrors(fieldsError) {
 
 // Ref: http://zparacha.com/phone_number_javascript_regex
 export const phoneValidationRegex = new RegExp(/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/)
+export const faxValidationRegex = new RegExp(/^[01]?[- .]?\(?[2-9]\d{2}\)?[- .]?\d{3}[- .]?\d{4}$/)
 // Ref: https://stackoverflow.com/a/160583/8465770
 export const zipCodeValidationRegex = new RegExp(/(^\d{5}$)|(^\d{5}-\d{4}$)/)
 export const passwordValidationRegex = new RegExp(
