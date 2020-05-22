@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Popconfirm, Table } from 'antd'
 
+import { Desktop, MobileOrTablet } from '../../../components/common/Device'
+import { MobileCell } from '../../../components/UI/TableUtils'
+
 export class ReferenceInfoTable extends Component {
 	constructor(props) {
 		super(props)
@@ -39,6 +42,7 @@ export class ReferenceInfoTable extends Component {
 				title: 'Actions',
 				dataIndex: 'action',
 				width: '100px',
+				align: 'center',
 				render: (text, record) => (
 					<>
 						<span
@@ -62,7 +66,30 @@ export class ReferenceInfoTable extends Component {
 		const { data } = this.props
 		// console.log(data)
 		return (
-			<Table bordered size='small' pagination={false} columns={this.columns} dataSource={data} />
+			<>
+				<Desktop>
+					<Table
+						bordered
+						size='small'
+						pagination={false}
+						columns={this.columns}
+						dataSource={data}
+					/>
+				</Desktop>
+				<MobileOrTablet>
+					<Table
+						bordered
+						size='small'
+						pagination={false}
+						columns={this.columns.map((col) => ({
+							...col,
+							onCell: (record) => ({ record, dataIndex: col.dataIndex, title: col.title }),
+						}))}
+						dataSource={data}
+						components={{ body: { cell: MobileCell } }}
+					/>
+				</MobileOrTablet>
+			</>
 		)
 	}
 }

@@ -1,12 +1,12 @@
 import { useMediaQuery } from 'react-responsive'
 
-const Desktop = ({ children }) => {
-	const isDesktop = useMediaQuery({ minWidth: 992 })
+const Desktop = ({ children, start }) => {
+	const isDesktop = useMediaQuery({ minWidth: start ? start : 992 })
 	return isDesktop ? children : null
 }
 
-const MobileOrTablet = ({ children }) => {
-	const isMobileOrTablet = useMediaQuery({ maxWidth: 991 })
+const MobileOrTablet = ({ children, end }) => {
+	const isMobileOrTablet = useMediaQuery({ maxWidth: end ? end : 991 })
 	return isMobileOrTablet ? children : null
 }
 

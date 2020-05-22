@@ -1,14 +1,26 @@
 import React, { Component } from 'react'
 import { Popconfirm, Table } from 'antd'
 
+import { randomString } from '../../../../utils/helpers'
+import { Desktop, MobileOrTablet } from '../../../../components/common/Device'
+import { MobileCell } from '../../../../components/UI/TableUtils'
+
 export class ServiceLocationTable extends Component {
+	renderNestedTable = (record, index, indent, expanded) => {
+		const data = []
+		const { phoneType, phoneNumber, language } = record
+		data.push({ key: randomString(), phoneType, phoneNumber, language })
+		return <Table columns={this.nestedPortion} dataSource={data} pagination={false} />
+	}
+
 	constructor(props) {
 		super(props)
-		this.columns = [
+		this.firstPortion = [
 			{
 				title: 'Street',
 				dataIndex: 'street',
 				key: 'street',
+				width: '40%',
 			},
 			{
 				title: 'City',
@@ -25,10 +37,20 @@ export class ServiceLocationTable extends Component {
 				dataIndex: 'zip',
 				key: 'zip',
 			},
+		]
+
+		this.nestedPortion = [
+			{ title: 'Phone Type', dataIndex: 'phoneType', key: 'phoneType' },
+			{ title: 'Phone Number', dataIndex: 'phoneNumber', key: 'phoneNumber' },
+			{ title: 'Language', dataIndex: 'language', key: 'language' },
+		]
+
+		this.lastPortion = [
 			{
 				title: 'Actions',
 				dataIndex: 'action',
 				width: '100px',
+				align: 'center',
 				render: (text, record) => (
 					<>
 						<span
@@ -48,11 +70,38 @@ export class ServiceLocationTable extends Component {
 			},
 		]
 	}
+
 	render() {
 		const { data } = this.props
 		// console.log(data)
 		return (
-			<Table bordered size='small' pagination={false} columns={this.columns} dataSource={data} />
+			<>
+				<Desktop>
+					<Table
+						bordered
+						size='small'
+						pagination={false}
+						columns={[...this.firstPortion, ...this.lastPortion]}
+						dataSource={data}
+						expandable={{ expandedRowRender: this.renderNestedTable }}
+					/>
+				</Desktop>
+				<MobileOrTablet>
+					<Table
+						bordered
+						size='small'
+						pagination={false}
+						columns={[...this.firstPortion, ...this.nestedPortion, ...this.lastPortion].map(
+							(col) => ({
+								...col,
+								onCell: (record) => ({ record, dataIndex: col.dataIndex, title: col.title }),
+							})
+						)}
+						dataSource={data}
+						components={{ body: { cell: MobileCell } }}
+					/>
+				</MobileOrTablet>
+			</>
 		)
 	}
 }
