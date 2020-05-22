@@ -133,7 +133,7 @@ export class Referral extends Component {
 										return x
 									}
 								})
-								console.log(update)
+
 								this.setState({ caseManagers: update })
 							}}
 						/>
