@@ -31,6 +31,9 @@ export class PayorSource extends Component {
 	startProcessing = (saveAndContinue = false) => {
 		const { sources, authorizations, authorizationDetails } = this.state
 
+		const authorizationErrorMsg = 'Please add authorization under all sources!'
+		const authorizationDetailsErrorMsg = 'Please add details under all authorizations!'
+
 		// 1. Sources Validation
 		if (sources.length === 0) {
 			message.error('Please add payor source!')
@@ -39,33 +42,54 @@ export class PayorSource extends Component {
 
 		// 2. Authorizations Validation
 		if (authorizations.length < sources.length) {
-			message.error('Please add authorization under all sources!')
+			message.error(authorizationErrorMsg)
 			return
 		}
 
 		// 2. Authorization Details Validation
 		if (authorizationDetails.length < authorizations.length) {
-			message.error('Please add details under all authorizations!')
+			message.error(authorizationDetailsErrorMsg)
 			return
 		}
 
 		// TODO: Adjust fields(like convert all date fields from moment to string)
 		// TODO: Implement mechanism to save
+		const data = clone(sources).map((source) => {
+			source['authorizations'] = clone(authorizations)
+				.filter((x) => x.sourceId === source.key)
+				.map((authorization) => {
+					authorization['details'] = clone(authorizationDetails).filter(
+						(y) => y.authorizationId === authorization.key
+					)
+					return authorization
+				})
+
+			return source
+		})
+
+		console.log(data)
+
+		// Final Validation
+		// let hasError = false
+		// let errorMsg = ''
+		// data.forEach((source) => {
+		// 	if (source.authorizations.length === 0) {
+		// 		hasError = true
+		// 		errorMsg = authorizationErrorMsg
+		// 	}
+		// 	source.authorizations.forEach((authorization) => {
+		// 		if (authorization.details.length === 0) {
+		// 			hasError = true
+		// 			errorMsg = authorizationDetailsErrorMsg
+		// 		}
+		// 	})
+		// })
+		// if (hasError && errorMsg) {
+		// 	message.error(errorMsg)
+		// 	return
+		// }
+
 		if (saveAndContinue) {
-			const data = clone(sources).map((source) => {
-				source['authorizations'] = clone(authorizations)
-					.filter((x) => x.sourceId === source.key)
-					.map((authorization) => {
-						authorization['details'] = clone(authorizationDetails).filter(
-							(y) => y.authorizationId === authorization.key
-						)
-						return authorization
-					})
-
-				return source
-			})
-
-			console.log(data)
 			this.props.goToNextTab(data)
 		}
 	}
@@ -102,8 +126,12 @@ export class PayorSource extends Component {
 					<PayorSourceTable
 						data={this.state.sources}
 						handleDelete={(key) => {
-							const update = this.state.sources.filter((x) => x.key !== key)
-							this.setState({ sources: update })
+							const sources = this.state.sources.filter((x) => x.key !== key)
+							const authorizations = this.state.authorizations.filter((x) => x.sourceId !== key)
+							const authorizationDetails = this.state.authorizationDetails.filter(
+								(x) => x.sourceId !== key
+							)
+							this.setState({ sources, authorizations, authorizationDetails })
 						}}
 						onEdit={(sourceData) => {
 							this.setState({ sourceEditingData: sourceData }, () =>
@@ -114,8 +142,11 @@ export class PayorSource extends Component {
 						authorizations={this.state.authorizations}
 						setAuthorizations={(authorizations) => this.setState({ authorizations })}
 						deleteAuthorization={(key) => {
-							const update = this.state.authorizations.filter((x) => x.key !== key)
-							this.setState({ authorizations: update })
+							const authorizations = this.state.authorizations.filter((x) => x.key !== key)
+							const authorizationDetails = this.state.authorizationDetails.filter(
+								(x) => x.authorizationId !== key
+							)
+							this.setState({ authorizations, authorizationDetails })
 						}}
 						updateAuthorization={(data) => {
 							const update = this.state.authorizations.map((x) => {

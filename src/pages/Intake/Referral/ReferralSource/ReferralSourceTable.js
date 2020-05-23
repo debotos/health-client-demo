@@ -147,7 +147,6 @@ const NestedTable = (props) => {
 					<AddCaseManager
 						onAddSuccess={(newData) => {
 							const update = [{ referralId: record.key, ...newData }, ...caseManagers]
-							console.log(update)
 							props.setCaseManagers(update)
 							setAddModal(false)
 						}}

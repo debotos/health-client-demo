@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Segment } from 'semantic-ui-react'
+import { clone } from 'ramda'
 import { Form, Button, Modal, message, Select, Input } from 'antd'
 import { Row, Col } from 'styled-bootstrap-grid'
 import {
@@ -32,9 +33,10 @@ export class Referral extends Component {
 	}
 
 	startProcessing = (saveAndContinue = false) => {
-		const { referrals } = this.state
+		const { referrals, caseManagers } = this.state
 		this.mounted && this.setState({ formProcessing: true })
 		const hide = message.loading('Processing form...', 0)
+		const caseManagerErrorMsg = 'Please add case manager under all referrals!'
 
 		// 1. Referral Validation
 		if (referrals.length === 0) {
@@ -44,16 +46,32 @@ export class Referral extends Component {
 			return
 		}
 
+		// 2. CaseManagers Validation
+		if (caseManagers.length < referrals.length) {
+			message.error(caseManagerErrorMsg)
+			hide()
+			this.mounted && this.setState({ formProcessing: false })
+			return
+		}
+
+		// Final Validation
+		const referralData = clone(referrals).map((referral) => {
+			referral['caseManagers'] = clone(caseManagers).filter((x) => x.referralId === referral.key)
+			return referral
+		})
+
 		this.formRef.current
 			.validateFields()
 			.then((values) => {
 				hide()
-				console.log('Success:', { ...values, referrals })
 				this.mounted && this.setState({ formProcessing: false })
+
+				const data = { referrals: referralData, ...values }
 				// TODO: Adjust fields(like convert all date fields from moment to string)
 				// TODO: Implement mechanism to save
+				console.log('Success:', data)
+
 				if (saveAndContinue) {
-					const data = { referrals, ...values }
 					this.props.goToNextTab(data)
 				}
 			})
@@ -113,8 +131,9 @@ export class Referral extends Component {
 						<ReferralSourceTable
 							data={this.state.referrals}
 							handleDelete={(key) => {
-								const update = this.state.referrals.filter((x) => x.key !== key)
-								this.setState({ referrals: update })
+								const referrals = this.state.referrals.filter((x) => x.key !== key)
+								const caseManagers = this.state.caseManagers.filter((x) => x.referralId !== key)
+								this.setState({ referrals, caseManagers })
 							}}
 							onEdit={(referralData) => {
 								this.setState({ referralEditingData: referralData }, () =>
