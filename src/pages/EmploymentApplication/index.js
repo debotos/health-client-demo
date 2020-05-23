@@ -96,21 +96,19 @@ class EmploymentApplication extends Component {
 	}
 
 	goToTab = (tabId, values = null, forward) => {
+		const { percent, current: currentTabId } = this.state
+		const eachTab = 100 / tabs.length
+		const visited = Object.keys(this.state.formValues).includes(currentTabId)
+
+		if (forward && !visited) {
+			// console.log(limitNumberWithinRange(percent + eachTab))
+			this.setState({ percent: limitNumberWithinRange(percent + eachTab) })
+		}
+
 		if (values) {
-			const { current: currentTabId } = this.state
 			const formValues = clone(this.state.formValues)
 			formValues[currentTabId] = values
 			this.setState({ formValues })
-		}
-
-		const { percent } = this.state
-		const eachTab = 100 / tabs.length
-		if (forward) {
-			// console.log(limitNumberWithinRange(percent + eachTab))
-			this.setState({ percent: limitNumberWithinRange(percent + eachTab) })
-		} else {
-			// console.log(limitNumberWithinRange(percent - eachTab))
-			this.setState({ percent: limitNumberWithinRange(percent - eachTab) })
 		}
 
 		this.setState({ current: tabId })
