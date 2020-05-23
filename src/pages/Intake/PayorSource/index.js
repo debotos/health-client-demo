@@ -31,9 +31,6 @@ export class PayorSource extends Component {
 	startProcessing = (saveAndContinue = false) => {
 		const { sources, authorizations, authorizationDetails } = this.state
 
-		const authorizationErrorMsg = 'Please add authorization under all sources!'
-		const authorizationDetailsErrorMsg = 'Please add details under all authorizations!'
-
 		// 1. Sources Validation
 		if (sources.length === 0) {
 			message.error('Please add payor source!')
@@ -42,13 +39,13 @@ export class PayorSource extends Component {
 
 		// 2. Authorizations Validation
 		if (authorizations.length < sources.length) {
-			message.error(authorizationErrorMsg)
+			message.error('Please add authorization under all sources!')
 			return
 		}
 
 		// 2. Authorization Details Validation
 		if (authorizationDetails.length < authorizations.length) {
-			message.error(authorizationDetailsErrorMsg)
+			message.error('Please add details under all authorizations!')
 			return
 		}
 
@@ -66,28 +63,6 @@ export class PayorSource extends Component {
 
 			return source
 		})
-
-		console.log(data)
-
-		// Final Validation
-		// let hasError = false
-		// let errorMsg = ''
-		// data.forEach((source) => {
-		// 	if (source.authorizations.length === 0) {
-		// 		hasError = true
-		// 		errorMsg = authorizationErrorMsg
-		// 	}
-		// 	source.authorizations.forEach((authorization) => {
-		// 		if (authorization.details.length === 0) {
-		// 			hasError = true
-		// 			errorMsg = authorizationDetailsErrorMsg
-		// 		}
-		// 	})
-		// })
-		// if (hasError && errorMsg) {
-		// 	message.error(errorMsg)
-		// 	return
-		// }
 
 		if (saveAndContinue) {
 			this.props.goToNextTab(data)

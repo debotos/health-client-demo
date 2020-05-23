@@ -54,7 +54,6 @@ export class Referral extends Component {
 			return
 		}
 
-		// Final Validation
 		const referralData = clone(referrals).map((referral) => {
 			referral['caseManagers'] = clone(caseManagers).filter((x) => x.referralId === referral.key)
 			return referral
