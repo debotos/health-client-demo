@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
 import { Segment } from 'semantic-ui-react'
-import { Form, Button, Modal, message } from 'antd'
+import { Form, Button, Modal, message, Select, Input } from 'antd'
 import { Row, Col } from 'styled-bootstrap-grid'
 import {
 	PlusOutlined,
 	LeftCircleOutlined,
 	CloseCircleOutlined,
 	SaveOutlined,
+	SearchOutlined,
 } from '@ant-design/icons'
 
 import ReferralSourceTable from './ReferralSource/ReferralSourceTable'
 import AddReferralSource from './ReferralSource/AddReferralSource'
 import EditReferralSource from './ReferralSource/EditReferralSource'
 import Btn from '../../../components/UI/Button'
+import { sourceNames } from './ReferralSource/AddReferralSource'
+import { phoneValidationRegex, faxValidationRegex } from '../../../utils/helpers'
 
 export class Referral extends Component {
 	componentWillUnmount() {
@@ -174,6 +177,72 @@ export class Referral extends Component {
 								data={this.state.referralEditingData}
 							/>
 						</Modal>
+					</Segment>
+
+					{/* Marketing Representative */}
+					<Segment>
+						<h3 className='title'>Marketing Representative</h3>
+						<Row>
+							<Col md='3'>
+								<Form.Item
+									label='Name'
+									name='marketingRepresentativeName'
+									rules={[{ whitespace: true, required: true, message: 'Select name!' }]}
+								>
+									<Select
+										allowClear
+										placeholder='Search name'
+										showSearch
+										suffixIcon={<SearchOutlined />}
+									>
+										{sourceNames.map((person) => {
+											const { key, name, value } = person
+											return (
+												<Select.Option key={key} value={value}>
+													{name}
+												</Select.Option>
+											)
+										})}
+									</Select>
+								</Form.Item>
+							</Col>
+							<Col md='3'>
+								<Form.Item
+									label='Phone Number'
+									name='phoneNumber'
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide phone number!' },
+										{ pattern: phoneValidationRegex, message: 'Phone number is invalid!' },
+									]}
+								>
+									<Input allowClear={true} placeholder='Phone number' />
+								</Form.Item>
+							</Col>
+							<Col md='3'>
+								<Form.Item
+									label='Fax Number'
+									name='faxNumber'
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide fax number!' },
+										{ pattern: faxValidationRegex, message: 'Fax number is invalid!' },
+									]}
+								>
+									<Input allowClear={true} placeholder='Fax number' />
+								</Form.Item>
+							</Col>
+							<Col md='3'>
+								<Form.Item
+									label='Email Address'
+									name='email'
+									rules={[
+										{ whitespace: true, required: true, message: 'Provide email address!' },
+										{ type: 'email', message: 'Invalid email address!' },
+									]}
+								>
+									<Input allowClear={true} placeholder='Email address' />
+								</Form.Item>
+							</Col>
+						</Row>
 					</Segment>
 
 					<Row style={{ marginTop: 20 }}>

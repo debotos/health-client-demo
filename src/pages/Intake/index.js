@@ -104,7 +104,7 @@ class EmploymentApplication extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			current: tabs[1].id,
+			current: tabs[2].id,
 			formValues: {},
 			percent: 0,
 		}
