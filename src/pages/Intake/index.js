@@ -76,10 +76,12 @@ class EmploymentApplication extends Component {
 		this.setState({ current: key })
 	}
 
+	isFormSectionComplete = (tabId) => Object.keys(this.state.formValues).includes(tabId)
+
 	goToTab = (tabId, values = null, forward) => {
 		const { percent, current: currentTabId } = this.state
 		const eachTab = 100 / tabs.length
-		const visited = Object.keys(this.state.formValues).includes(currentTabId)
+		const visited = this.isFormSectionComplete(currentTabId)
 
 		if (forward && !visited) {
 			// console.log(limitNumberWithinRange(percent + eachTab))
@@ -131,8 +133,9 @@ class EmploymentApplication extends Component {
 								const nextTabId = currentTabPosition < totalTabs ? tabs[index + 1].id : null
 								const prevTabId = currentTabPosition !== 1 ? tabs[index - 1].id : null
 								const { id, title, icon, component: ApplicationForm } = tab
+								const done = this.isFormSectionComplete(id)
 								const TabHead = (
-									<TabHeadItem>
+									<TabHeadItem done={done.toString()}>
 										<span>{icon}</span>
 										<span>{title}</span>
 									</TabHeadItem>
@@ -172,6 +175,7 @@ const TabHeadItem = styled.span`
 	display: flex;
 	span {
 		margin: 0 5px;
+		color: ${(props) => props.done === 'true' && '#379503'};
 		svg {
 			font-weight: bold;
 			font-size: 20px;
