@@ -1,45 +1,22 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'styled-bootstrap-grid'
-import { Label, Segment } from 'semantic-ui-react'
-import { Checkbox, Form, Input, DatePicker, Modal } from 'antd'
+import { Segment } from 'semantic-ui-react'
+import { Checkbox, Form, Input, DatePicker } from 'antd'
 import moment from 'moment'
 import { StepForwardOutlined } from '@ant-design/icons'
 import { clone } from 'ramda'
+
 import Btn from '../../components/UI/Button'
+import { checkFormSectionMissing } from '../../utils/checkFormSectionMissing'
 
 export class AgreementInfoForm extends Component {
 	onFinish = (values) => {
 		/* Last Form Section | Special */
-		// this.formRef.current.resetFields()
 		const { tabs, id, formValues } = this.props
 		const finalValues = { [id]: values, ...clone(formValues) }
-		console.log('Final values =>', finalValues)
-		const sectionIds = Object.keys(finalValues)
-		const errorInSections = []
-		tabs.forEach((tab) => {
-			const flag = sectionIds.includes(tab.id)
-			if (!flag) errorInSections.push(tab.title)
-		})
-		if (errorInSections.length > 0) {
-			const config = {
-				title: 'Missing required form fields!',
-				content: (
-					<div>
-						<h4>
-							Check the following tab{errorInSections.length > 0 ? 's' : ''} and fill the required
-							fields then press 'Save and Continue' button.
-						</h4>
-						{errorInSections.map((section) => (
-							<Label color={'red'} key={section} style={{ margin: 5 }}>
-								{section}
-							</Label>
-						))}
-					</div>
-				),
-			}
-			Modal.error(config)
-			return
-		}
+		const hasError = checkFormSectionMissing(finalValues, tabs)
+		if (hasError) return
+
 		// TODO: Adust and send it to backend via AJAX call
 		this.props.onSuccessfulSubmit()
 	}
