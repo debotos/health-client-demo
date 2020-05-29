@@ -6,10 +6,13 @@ import AppRoutes from './AppRoutes'
 import store from '../redux/store'
 import { setCurrentUser } from '../redux/actions/authActions'
 import LoadingCenter from '../components/UI/Loading/LoadingCenter'
+import variables from '../config/vars'
+
+const { USER_DATA } = variables
 
 export class App extends Component {
 	async componentDidMount() {
-		let user = localStorage.getItem('USER')
+		let user = localStorage.getItem(USER_DATA)
 		if (user) {
 			user = JSON.parse(user)
 			store.dispatch(setCurrentUser(user))

@@ -14,18 +14,25 @@ import {
 	FaReceipt,
 	FaRegFileAlt,
 	FaUserCog,
+	FaTachometerAlt,
+	FaUsers,
+	FaRegEnvelope,
+	FaCog,
 } from 'react-icons/fa'
 
 import { CloseButton, LogoffButton, NavArea, ActionContainer } from './CommonUI'
 import { setCurrentUser } from '../redux/actions/authActions'
+import variables from '../config/vars'
 
-function AuthenticateDrawer({ closeDrawer, setUser, auth, desktop }) {
+const { ADMIN_ROLE, USER_DATA } = variables
+
+function AuthenticateDrawer({ closeDrawer, setUser, auth, desktop, adminNav = false }) {
 	const handleLogoff = () => {
 		const hide = message.loading('Logging off...', 0)
 		/* Remove from server side via ajax call */
 		// When ajax finished then do the followings -
 		/* Remove data from local storage */
-		localStorage.removeItem('USER')
+		localStorage.removeItem(USER_DATA)
 		/* Remove from Redux, It will kick the user to Login page */
 		setUser({}) // Empty User
 		setTimeout(() => hide(), 2000)
@@ -42,7 +49,7 @@ function AuthenticateDrawer({ closeDrawer, setUser, auth, desktop }) {
 				</Tooltip>
 			</ActionContainer>
 			<ul>
-				{NavRoutes.map((link, index) => (
+				{getRoutes(auth.user, adminNav).map((link, index) => (
 					<li key={`nav_link_${index}`}>
 						<NavLink to={link.to} exact activeClassName='active'>
 							<span className='nav-icon'>{link.icon}</span>
@@ -61,7 +68,21 @@ const mapDispatchToProps = (dispatch) => ({ setUser: (user) => dispatch(setCurre
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateDrawer)
 
-const NavRoutes = [
+const getRoutes = (user, adminNav) => {
+	const { role } = user
+	const isAdmin = role === ADMIN_ROLE
+	if (isAdmin && adminNav) {
+		return adminRoutes
+	} else {
+		if (isAdmin) {
+			return [...normalRoutes, { ...adminRoutes[0], label: 'Admin' }]
+		} else {
+			return normalRoutes
+		}
+	}
+}
+
+const normalRoutes = [
 	{ icon: <MdHome />, to: '/', label: 'Dashboard' },
 	{ icon: <FiFileText />, to: '/intake', label: 'Intake' },
 	{ icon: <FaProjectDiagram />, to: '/workflow', label: 'Workflow' },
@@ -74,4 +95,14 @@ const NavRoutes = [
 	{ icon: <FaRegFileAlt />, to: '/reports', label: 'Reports' },
 	{ icon: <FaUserCog />, to: '/administration', label: 'Administration' },
 	{ icon: <MdWork />, to: '/jobs', label: 'Jobs' },
+]
+
+const adminRoutes = [
+	{ icon: <FaTachometerAlt />, to: '/admin', label: 'Dashboard' },
+	{ icon: <MdWork />, to: '/admin/jobs', label: 'Jobs' },
+	{ icon: <FaUsers />, to: '/admin/candidates', label: 'Candidates' },
+	{ icon: <FaRegEnvelope />, to: '/admin/messages', label: 'Messages' },
+	{ icon: <FaUserTie />, to: '/admin/interviews', label: 'Interviews' },
+	{ icon: <FaRegFileAlt />, to: '/admin/reports', label: 'Reports' },
+	{ icon: <FaCog />, to: '/admin/setting', label: 'Setting' },
 ]

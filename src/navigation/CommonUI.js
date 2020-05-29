@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import media from 'styled-media-query'
 import { FiXCircle, FiLogOut } from 'react-icons/fi'
 
+import variables from '../config/vars'
+
+const { PRIMARY_COLOR } = variables
+
 // UI elements to create side navigation
 
 /* 1 */
@@ -96,9 +100,9 @@ export const NavArea = styled.div`
 			}
 			a.active {
 				background-color: #fff;
-				color: #379503;
+				color: ${PRIMARY_COLOR};
 				box-shadow: 0 5px 5px -5px #c1c1c1, 0 -5px 5px -5px #c1c1c1;
-				border-left-color: #379503;
+				border-left-color: ${PRIMARY_COLOR};
 			}
 		}
 		li:last-child {

@@ -31,7 +31,9 @@ import WorkHourInput, { initialWorkingHourData } from '../../../components/UI/in
 import { JobDetailsHighlight } from '../../JobListing'
 import { history } from '../../../app/AppRoutes'
 import Btn from '../../../components/UI/Button'
+import variables from '../../../config/vars'
 
+const { PRIMARY_COLOR } = variables
 const CheckboxGroup = Checkbox.Group
 const { Option } = Select
 const { TextArea } = Input
@@ -185,7 +187,7 @@ export class PersonalInfoForm extends Component {
 					<Label attached='top' style={{ display: 'flex', justifyContent: 'space-between' }}>
 						<span>Job You're Applying</span>
 						<span
-							style={{ cursor: 'pointer', color: '#379503' }}
+							style={{ cursor: 'pointer', color: PRIMARY_COLOR }}
 							onClick={() => history.replace('/jobs')}
 						>
 							<LeftCircleOutlined /> Select Another

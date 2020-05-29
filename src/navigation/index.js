@@ -28,7 +28,7 @@ const DesktopDrawerContainer = styled(MobileDrawerContainer)``
 
 class sideDrawer extends React.Component {
 	render() {
-		const { show, auth, closeDrawer, setLoading } = this.props
+		const { show, auth, closeDrawer, setLoading, ...restProps } = this.props
 
 		let drawerClasses = 'side-drawer'
 		if (show) {
@@ -48,9 +48,10 @@ class sideDrawer extends React.Component {
 									closeDrawer={closeDrawer}
 									setLoading={setLoading}
 									desktop={false}
+									{...restProps}
 								/>
 							) : (
-								<NonAuthenticateDrawer closeDrawer={closeDrawer} desktop={false} />
+								<NonAuthenticateDrawer closeDrawer={closeDrawer} desktop={false} {...restProps} />
 							)}
 						</MobileDrawerContainer>
 					</div>
@@ -59,9 +60,14 @@ class sideDrawer extends React.Component {
 					<div className='side-drawer-desktop'>
 						<DesktopDrawerContainer>
 							{isAuthenticated ? (
-								<AuthenticateDrawer user={user} setLoading={setLoading} desktop={true} />
+								<AuthenticateDrawer
+									user={user}
+									setLoading={setLoading}
+									desktop={true}
+									{...restProps}
+								/>
 							) : (
-								<NonAuthenticateDrawer desktop={true} />
+								<NonAuthenticateDrawer desktop={true} {...restProps} />
 							)}
 						</DesktopDrawerContainer>
 					</div>

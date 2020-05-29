@@ -76,6 +76,9 @@ th {
 .ant-divider-inner-text {
 	font-weight: bold;
 }
+.ant-dropdown.ant-dropdown-placement-bottomRight {
+	min-width: 120px !important;
+}
 .ant-table-tbody .ant-table-wrapper:only-child .ant-table {
 	margin: -8px -8px -8px !important;
 }

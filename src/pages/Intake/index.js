@@ -17,7 +17,9 @@ import Demographics from './Demographics'
 import Clinical from './Clinical'
 import Footer from '../../components/common/Footer'
 import DrawerNavigation from '../../navigation'
+import variables from '../../config/vars'
 
+const { PRIMARY_COLOR } = variables
 const { TabPane } = Tabs
 const tabs = [
 	{
@@ -175,7 +177,7 @@ const TabHeadItem = styled.span`
 	display: flex;
 	span {
 		margin: 0 5px;
-		color: ${(props) => props.done === 'true' && '#379503'};
+		color: ${(props) => props.done === 'true' && PRIMARY_COLOR};
 		svg {
 			font-weight: bold;
 			font-size: 20px;

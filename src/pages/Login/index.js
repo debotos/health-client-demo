@@ -9,13 +9,16 @@ import signInBG from '../../assets/signInBG.jpg'
 import Logo from '../../assets/logo.png'
 import { Container, Image, Box } from '../SignUp'
 import { setCurrentUser } from '../../redux/actions/authActions'
+import variables from '../../config/vars'
+
+const { USER_DATA } = variables
 
 export class Login extends Component {
 	onFinish = (values) => {
 		console.log('Success:', values)
 		// TODO: Ajax req to send the data | pass res to redux
 		this.formRef.current.resetFields()
-		localStorage.setItem('USER', JSON.stringify(values))
+		localStorage.setItem(USER_DATA, JSON.stringify(values))
 		/* Save to Redux for app use*/
 		/* Also it will instantly redirect the user to Dashboard page */
 		this.props.setUser(values)

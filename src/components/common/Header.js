@@ -2,13 +2,20 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Swipeable } from 'react-swipeable'
 import { MdMenu } from 'react-icons/md'
+import { connect } from 'react-redux'
+import { Dropdown, Menu, Avatar, message } from 'antd'
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import { Transition } from 'semantic-ui-react'
 
 import DrawerNavigation from '../../navigation'
+import { setCurrentUser } from '../../redux/actions/authActions'
 import Backdrop from '../../navigation/Backdrop'
 import { history } from '../../app/AppRoutes'
 import Logo from '../../assets/logo.png'
-import { MobileOrTablet } from '../common/Device'
+import { MobileOrTablet, Desktop } from '../common/Device'
+import variables from '../../config/vars'
+
+const { PRIMARY_COLOR, USER_DATA } = variables
 
 export class Header extends Component {
 	componentDidMount() {
@@ -33,9 +40,39 @@ export class Header extends Component {
 		this._isMounted && this.setState({ sideDrawerOpen: false })
 	}
 
+	handleLogoff = () => {
+		const hide = message.loading('Logging off...', 0)
+		/* TODO: */
+		/* Remove from server side via ajax call */
+		// When ajax finished then do the followings -
+		/* Remove data from local storage */
+		localStorage.removeItem(USER_DATA)
+		/* Remove from Redux, It will kick the user to Login page */
+		this.props.setUser({}) // Empty User
+		setTimeout(() => hide(), 2000)
+	}
+
+	getDropdownMenu = () => {
+		return (
+			<Menu>
+				<Menu.Item onClick={() => history.push('/profile')}>
+					<span>
+						<UserOutlined /> Profile
+					</span>
+				</Menu.Item>
+				<Menu.Item onClick={this.handleLogoff}>
+					<span style={{ color: 'tomato' }}>
+						<LogoutOutlined /> Logout
+					</span>
+				</Menu.Item>
+			</Menu>
+		)
+	}
+
 	render() {
 		const { sideDrawerOpen } = this.state
-		const { title, sticky = false, bgColor } = this.props
+		// prettier-ignore
+		const { title, sticky = false, bgColor, auth: { user } } = this.props
 
 		return (
 			/*
@@ -53,15 +90,36 @@ export class Header extends Component {
 								</MenuButton>
 							</div>
 						</MobileOrTablet>
+						<Desktop>
+							<div style={{ flex: 1 }} />
+						</Desktop>
 
 						<LogoContainer>
 							<AppLogo src={Logo} alt='Care Pine Home Health' onClick={() => history.push('/')} />
 							{title && <h3 style={{ marginTop: '8px', textAlign: 'center' }}>{title}</h3>}
 						</LogoContainer>
 
-						<MobileOrTablet>
-							<div style={{ flex: 1 }} />
-						</MobileOrTablet>
+						<div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+							<Dropdown
+								overlay={this.getDropdownMenu()}
+								placement='bottomRight'
+								trigger={['hover', 'click']}
+							>
+								{user.profile_img ? (
+									<Avatar size={38} src={user.profile_img} />
+								) : user.username ? (
+									<Avatar size={38} style={{ backgroundColor: PRIMARY_COLOR }}>
+										{user.email.charAt(0).toUpperCase()}
+									</Avatar>
+								) : (
+									<Avatar
+										size={38}
+										icon={<UserOutlined />}
+										style={{ backgroundColor: PRIMARY_COLOR }}
+									/>
+								)}
+							</Dropdown>
+						</div>
 					</Container>
 				</header>
 				<MobileOrTablet>
@@ -90,7 +148,10 @@ export class Header extends Component {
 	}
 }
 
-export default Header
+const mapStateToProps = (state) => ({ auth: state.auth })
+const mapDispatchToProps = (dispatch) => ({ setUser: (user) => dispatch(setCurrentUser(user)) })
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
 
 const Container = styled.div`
 	width: 100%;
@@ -142,7 +203,7 @@ const SwipeableArea = styled(Swipeable)`
 const MenuButton = styled.div`
 	height: 40px;
 	width: 40px;
-	background-color: #379503;
+	background-color: ${PRIMARY_COLOR};
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
